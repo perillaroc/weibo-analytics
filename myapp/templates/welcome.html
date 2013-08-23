@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>紫苏远志的小屋</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <!--link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen"-->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <h1 class='text-center'>紫苏远志的小屋</h1>
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4 text-center">by windroc,2013</div>
+    </div>
+    <div class="row">
+      <div class='col-md-8 col-md-offset-2 text-center'>
+        <img style="margin-bottom:10px" src="{{ forgroud_image['source'] }}"  alt="{{ forgroud_image['no'] }}}" />
+      </div>
+    </div>
+    <div class="row">
+      <div class='col-md-8 col-md-offset-2 text-center'>
+        <a href="{{ forgroud_image['url'] }}" class="btn btn-primary btn-lg">图片来自Flickr</a>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    {% if config.ONLINE %}
+      <!-- code for Baidu tongji-->
+      <script type="text/javascript">
+        var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fdae28e519ad5e45456514d3444ea7fab' type='text/javascript'%3E%3C/script%3E"));
+      </script>
+    {% endif %}
+  </body>
+</html>
