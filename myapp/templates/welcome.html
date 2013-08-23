@@ -19,16 +19,54 @@
     <div class="row">
       <div class="col-md-4 col-md-offset-4 text-center">by windroc,2013</div>
     </div>
+    
+    {# have front_image_list , show slide #}
+    {% if front_image_list %}
     <div class="row">
-      <div class='col-md-8 col-md-offset-2 text-center'>
-        <img style="margin-bottom:10px" src="{{ forgroud_image['source'] }}"  alt="{{ forgroud_image['no'] }}}" />
-      </div>
+        <div class='col-md-6 col-md-offset-3 text-center'>
+          <div id="carousel-example-generic" class="carousel slide">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+              {% for a_front_image in front_image_list %}
+                <li data-target="#carousel-example-generic" data-slide-to="{{ loop.index0 }}" {% if loop.index == 1 %} class="active" {% endif %}></li>
+              {% endfor%}
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+              {% for a_front_image in front_image_list %}
+              <div class="item {% if loop.index == 1 %}  active {% endif %} ">
+                <img style="margin-bottom:10px;margin-left:auto;margin-right:auto" src="{{ a_front_image['source'] }}"  alt="{{ a_front_image['index'] }}}" />
+                <div class="carousel-caption">
+                  <h3>{{ a_front_image['title'] }}</h3>
+                  <a href="{{ a_front_image['url'] }}">图片来自Flickr</a>
+                </div>
+              </div>
+              {% endfor%}
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+              <span class="icon-prev"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+              <span class="icon-next"></span>
+            </a>
+          </div>
+          
+        </div>
     </div>
-    <div class="row">
-      <div class='col-md-8 col-md-offset-2 text-center'>
-        <a href="{{ forgroud_image['url'] }}" class="btn btn-primary btn-lg">图片来自Flickr</a>
-      </div>
+    {# only have front_image , show a single image #}
+    {% else %}
+        <div class='col-md-8 col-md-offset-2 text-center'>
+          <img style="margin-bottom:10px" src="{{ front_image['source'] }}"  alt="{{ front_image['index'] }}}" />
+        </div>
+        <div class='col-md-8 col-md-offset-2 text-center'>
+          <a href="{{ front_image['url'] }}">图片来自Flickr</a>
+        </div>
     </div>
+    {% endif %}
+    
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="//code.jquery.com/jquery.min.js"></script>
