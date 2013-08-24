@@ -9,7 +9,7 @@ from myapp.thirdparty import flickr as flickr
 
 @app.route('/api/update-front-image')
 def updateFrontImage():
-    total_image_count = 20
+    total_image_count = 10
     front_image_list = []
     import random
     photos = flickr.interestingness()
