@@ -3,7 +3,7 @@ name: analytics
 version: 1
 
 cron:
-    - description: update front image cache
+  - description: update front image cache
     url: api/update-front-image
     schedule: every 4 hours
 ...
