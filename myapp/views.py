@@ -22,7 +22,9 @@ def welcome():
             if a_size['label'] == 'Medium':
                 front_image['source'] = a_size['source']
                 front_image['url'] = a_size['url']
-        return render_template('welcome.html', front_image=front_image)
+        front_image_list = []
+        front_image_list.append(front_image)
     else:
         random.shuffle(front_image_list)
-        return render_template('welcome.html', front_image_list=front_image_list)
+
+    return render_template('welcome.html', front_image_list=front_image_list)

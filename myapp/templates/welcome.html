@@ -1,34 +1,58 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>紫苏远志的小屋</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
-    <!--link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen"-->
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+<head>
+  <title>紫苏远志的微博统计</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+  <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet" media="screen">
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="../../assets/js/html5shiv.js"></script>
-      <script src="../../assets/js/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <h1 class='text-center'>紫苏远志的小屋</h1>
-    <div class="row">
-      <div class="col-md-4 col-md-offset-4 text-center">by windroc,2013</div>
-    </div>
-    
-    {# have front_image_list , show slide #}
-    {% if front_image_list %}
-    <div class="row">
-        <div class='col-md-6 col-md-offset-3 text-center'>
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="../../assets/js/html5shiv.js"></script>
+  <script src="../../assets/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="container">
+    <header>
+      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">紫苏远志的微博统计</a>
+          </div>
+          <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">首页</a></li>
+              <li><a href="#">关于</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <section id="front-end">
+      <div class="row">
+        <h1 class='text-center'></h1>
+      </div>
+      <div class="row">
+        <div class='col-md-4 pull-right'>
+            <h3>使用新浪微博账号登录</h3>
+            <a href="#"><img src="{{ url_for('static',filename='img/sina-weibo-48.png') }}" alt="用微博账号登录"/></a>
+        </div>
+        <!-- image slide from flickr -->
+        <div class='col-md-6 col-md-offset-1 text-center'>
           <div id="carousel-example-generic" class="carousel slide">
             <!-- Indicators -->
             <ol class="carousel-indicators">
               {% for a_front_image in front_image_list %}
-                <li data-target="#carousel-example-generic" data-slide-to="{{ loop.index0 }}" {% if loop.index == 1 %} class="active" {% endif %}></li>
+              <li data-target="#carousel-example-generic" data-slide-to="{{ loop.index0 }}" {% if loop.index == 1 %} class="active" {% endif %}></li>
               {% endfor%}
             </ol>
 
@@ -53,31 +77,36 @@
               <span class="icon-next"></span>
             </a>
           </div>
-          
         </div>
-    </div>
-    {# only have front_image , show a single image #}
-    {% else %}
-        <div class='col-md-8 col-md-offset-2 text-center'>
-          <img style="margin-bottom:10px" src="{{ front_image['source'] }}"  alt="{{ front_image['index'] }}}" />
-        </div>
-        <div class='col-md-8 col-md-offset-2 text-center'>
-          <a href="{{ front_image['url'] }}">图片来自Flickr</a>
-        </div>
-    </div>
-    {% endif %}
-    
+      </div>
+    </section>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="//code.jquery.com/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-    {% if config.ONLINE %}
-      <!-- code for Baidu tongji-->
-      <script type="text/javascript">
-        var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-        document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fdae28e519ad5e45456514d3444ea7fab' type='text/javascript'%3E%3C/script%3E"));
-      </script>
-    {% endif %}
-  </body>
+    <footer>
+      <div class="row">
+          <ul class="list-inline text-center">
+            <li>首页</li>
+            <li>关于</li>
+            <li>联系</li>
+            <li>博客</li>
+            <li>Github</li>
+          </ul>
+          <p class="text-center">Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2013 windroc.<p>
+      </div>
+    </footer>
+  </div>
+  <!-- /container -->
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="//code.jquery.com/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  {% if config.ONLINE %}
+    <!-- code for Baidu tongji-->
+    <script type="text/javascript">
+          var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+          document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fdae28e519ad5e45456514d3444ea7fab' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+  {% endif %}
+
+</body>
 </html>

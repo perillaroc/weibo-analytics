@@ -1,0 +1,43 @@
+{# templete footer #}
+{# 
+  需要的变量
+  local_js_file_list
+#}
+<!-- footer.html -->
+    <footer>
+      <div class="row">
+          <ul class="list-inline text-center">
+            <li>首页</li>
+            <li>关于</li>
+            <li>联系</li>
+            <li>博客</li>
+            <li>Github</li>
+          </ul>
+          <p class="text-center">Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2013 windroc.<p>
+      </div>
+    </footer>
+  </div>
+  <!-- /container -->
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="//code.jquery.com/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+  {# 添加特定js文件 #}
+  {% if local_js_file_list %}
+    {% for a_file in local_js_file_list %}
+      <script src="{{ a_file['src'] }}"></script>
+    {% endfor %}
+  {% endif%}
+  
+  {% if config.ONLINE %}
+    <!-- code for Baidu tongji-->
+    <script type="text/javascript">
+          var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+          document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fdae28e519ad5e45456514d3444ea7fab' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+  {% endif %}
+
+</body>
+</html>
