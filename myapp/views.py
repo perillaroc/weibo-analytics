@@ -19,7 +19,7 @@ def welcome():
         front_image['index'] = photo_no
         front_image['url'] = photos_sizes[0]['source']
         for a_size in photos_sizes:
-            if a_size['label'] == 'Medium':
+            if a_size['label'] == 'Medium 640':
                 front_image['source'] = a_size['source']
                 front_image['url'] = a_size['url']
         front_image_list = []

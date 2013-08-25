@@ -24,7 +24,7 @@ def updateFrontImage():
         a_photo_sizes = photos[a_photo_no].getSizes()
         a_front_image['url'] = a_photo_sizes[0]['source']
         for a_size in a_photo_sizes:
-            if a_size['label'] == 'Medium':
+            if a_size['label'] == 'Medium 640':
                 a_front_image['source'] = a_size['source']
                 a_front_image['url'] = a_size['url']
         print a_photo_no
