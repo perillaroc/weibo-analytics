@@ -1,11 +1,10 @@
 from flask import request, url_for, render_template, jsonify
-from myapp import app
+from myapp import app,db
 
 import pylibmc
 from myapp.thirdparty import flickr as flickr
 
 # update foreground image array in memcache from flickr
-
 
 @app.route('/api/update-front-image')
 def updateFrontImage():
@@ -36,3 +35,9 @@ def updateFrontImage():
     mc.set("front_image_list", front_image_list)
     front_image_list_2 = mc.get("front_image_list")
     return jsonify(front_image_list=front_image_list_2)
+
+@app.route("/api/create-database")
+def createDatabase():
+    print "begin create database"
+    db.create_all()
+    return "OK"
