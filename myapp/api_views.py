@@ -1,7 +1,10 @@
 from flask import request, url_for, render_template, jsonify
 from myapp import app,db
 
-import pylibmc
+if app.config['ONLINE']:
+    import pylibmc
+else:
+    import sae.memcache as pylibmc
 from myapp.thirdparty import flickr as flickr
 
 # update foreground image array in memcache from flickr

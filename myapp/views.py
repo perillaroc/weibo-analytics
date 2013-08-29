@@ -1,7 +1,10 @@
 from flask import Flask, request, url_for, render_template, make_response
 from myapp import app
 from myapp.thirdparty import flickr as flickr
-import pylibmc
+if app.config['ONLINE']:
+    import pylibmc
+else:
+    import sae.memcache as pylibmc
 
 
 @app.route('/')

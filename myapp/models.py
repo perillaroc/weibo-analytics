@@ -1,6 +1,9 @@
 from myapp import db
 from sqlalchemy.schema import Sequence as Sequence
 
+ROLE_USER = 0
+ROLE_ADMIN = 1 # use?
+
 class User(db.Model):
     id = db.Column(db.BigInteger(64), Sequence('id_seq'), primary_key=True)
     uid = db.Column(db.BigInteger(64), unique=True)
