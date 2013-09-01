@@ -1,5 +1,12 @@
+# encoding: utf-8
 from flask import request, url_for, render_template, jsonify
+from flask.ext.security import login_required, current_user
+from flask.ext.security.decorators import anonymous_user_required
 from myapp import app,db
+
+from weibo import APIClient
+client = APIClient(app_key=app.config['APP_KEY'], \
+        app_secret=app.config['APP_SECRET'], redirect_uri=app.config['CALLBACK_URL'])
 
 if app.config['ONLINE']:
     import pylibmc
@@ -44,3 +51,33 @@ def createDatabase():
     print "begin create database"
     db.create_all()
     return "OK"
+
+def loadOrCreatorUser(token):
+    '''根据token载入或创建用户
+    '''
+
+    user = db.User.query.filter_by(uid=int(token.uid)).first()
+    if user is None:
+        print 'user is not created'
+        # create user
+
+    else:
+        print 'user has been created'
+        # load user
+    
+
+@app.route('/api/user/auth-callback')
+@anonymous_user_required
+def authCallback():
+    '''检查用户是否存在，不存在则创建，并载入用户
+    还需要错误检查
+    '''
+    authorization_code = request.args.get('code','')
+    token = client.request_access_token(authorization_code)
+    access_token = token.access_token # 新浪返回的token，类似abc123xyz456
+    expires_in = token.expires_in # token过期的UNIX时间
+    uid = token.uid # 用户的uid
+    client.set_access_token(access_token, expires_in)
+    print current_user
+    print token
+    return "Login Successful"

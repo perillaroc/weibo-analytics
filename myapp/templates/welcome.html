@@ -1,4 +1,7 @@
 {# templete welcome.html
+  require:
+    front_image_list
+    authorize_url
 #}
 
 {% include 'header.html' %}
@@ -11,7 +14,7 @@
       <div class="row">
         <div class='col-md-4 pull-right'>
             <h3>使用新浪微博账号登录</h3>
-            <a class="btn" href="#"><img src="{{ url_for('static',filename='img/sina-weibo-48.png') }}" alt="用微博账号登录"/></a>
+            <a class="btn" href="{{ authorize_url }}"><img src="{{ url_for('static',filename='img/sina-weibo-48.png') }}" alt="用微博账号登录"/></a>
         </div>
         <!-- image slide from flickr -->
         <div class='col-md-8 text-center'>
