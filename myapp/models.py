@@ -20,7 +20,7 @@ class Role(db.Model, RoleMixin):
     description = db.Column(db.String(255))
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.BigInteger(64), Sequence('id_seq'), primary_key=True)
     email = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(255))
@@ -32,8 +32,8 @@ class User(db.Model):
     update_time = db.Column(db.DateTime())
     create_time = db.Column(db.DateTime())
     token = db.Column(db.Text())
-    # roles = db.relationship('Role', secondary=roles_users,
-    #                       backref=db.backref('users', lazy='dynamic'))
+    roles = db.relationship('Role', secondary=roles_users,
+                            backref=db.backref('users', lazy='dynamic'))
 
     def __init__(self, uid, info, token):
         self.uid = uid

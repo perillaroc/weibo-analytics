@@ -1,8 +1,9 @@
 # encoding: utf-8
 from flask import request, url_for, render_template, jsonify
-from flask.ext.security import login_required, current_user
+from flask.ext.security import login_required, current_user, login_user
 from flask.ext.security.decorators import anonymous_user_required
 from myapp import app,db
+from myapp.models import User
 
 from weibo import APIClient
 client = APIClient(app_key=app.config['APP_KEY'], \
@@ -56,14 +57,23 @@ def loadOrCreatorUser(token):
     '''根据token载入或创建用户
     '''
 
-    user = db.User.query.filter_by(uid=int(token.uid)).first()
+    user = User.query.filter_by(uid=int(token.uid)).first()
     if user is None:
         print 'user is not created'
         # create user
-
+        user_info = client.users.show.get(uid=token.uid)
+        user = User(token.uid, user_info, token)
+        user.active = True
+        db.session.add(user)
+        db.session.commit()
+        login_user(user)
     else:
         print 'user has been created'
         # load user
+        user.active = True
+        user.token = token
+        db.session.commit()
+        login_user(user)
     
 
 @app.route('/api/user/auth-callback')
@@ -78,6 +88,7 @@ def authCallback():
     expires_in = token.expires_in # token过期的UNIX时间
     uid = token.uid # 用户的uid
     client.set_access_token(access_token, expires_in)
+    #print token
+    loadOrCreatorUser(token)
     print current_user
-    print token
     return "Login Successful"
