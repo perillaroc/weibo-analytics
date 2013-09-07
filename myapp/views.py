@@ -1,5 +1,6 @@
 # encoding: utf-8
 from flask import Flask, request, url_for, render_template, make_response
+from flask.ext.security import login_required, current_user
 from myapp import app
 from myapp.thirdparty import flickr as flickr
 if app.config['ONLINE']:
@@ -36,6 +37,11 @@ def welcome():
     client = APIClient(app_key=app.config['APP_KEY'], \
         app_secret=app.config['APP_SECRET'], redirect_uri=app.config['CALLBACK_URL'])
     authorize_url = client.get_authorize_url()
-    print authorize_url
+    #print authorize_url
 
     return render_template('welcome.html', front_image_list=front_image_list, authorize_url=authorize_url)
+
+@app.route('/test')
+@login_required
+def testView():
+    return 'you are login!'

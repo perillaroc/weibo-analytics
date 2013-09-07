@@ -77,7 +77,6 @@ def loadOrCreatorUser(token):
     
 
 @app.route('/api/user/auth-callback')
-@anonymous_user_required
 def authCallback():
     '''检查用户是否存在，不存在则创建，并载入用户
     还需要错误检查
@@ -88,7 +87,7 @@ def authCallback():
     expires_in = token.expires_in # token过期的UNIX时间
     uid = token.uid # 用户的uid
     client.set_access_token(access_token, expires_in)
-    #print token
+    print token
     loadOrCreatorUser(token)
     print current_user
     return "Login Successful"

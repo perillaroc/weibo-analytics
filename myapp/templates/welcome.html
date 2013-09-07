@@ -16,6 +16,7 @@
             <h3>使用新浪微博账号登录</h3>
             <a class="btn" href="{{ authorize_url }}"><img src="{{ url_for('static',filename='img/sina-weibo-48.png') }}" alt="用微博账号登录"/></a>
         </div>
+        {% if front_image_list %}
         <!-- image slide from flickr -->
         <div class='col-md-8 text-center'>
           <div id="carousel-example-generic" class="carousel slide">
@@ -48,6 +49,7 @@
             </a>
           </div>
         </div>
+        {% endif %}
       </div>
     </section>
 <!-- /welcome.html -->
