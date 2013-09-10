@@ -1,6 +1,6 @@
 # encoding: utf-8
 from flask import request, url_for, render_template, jsonify
-from flask.ext.security import login_required, current_user, login_user
+from flask.ext.security import login_required, current_user, login_user, logout_user
 from flask.ext.security.decorators import anonymous_user_required
 from myapp import app,db
 from myapp.models import User
@@ -14,6 +14,8 @@ if app.config['ONLINE']:
 else:
     import sae.memcache as pylibmc
 from myapp.thirdparty import flickr as flickr
+
+import json
 
 # update foreground image array in memcache from flickr
 
@@ -62,7 +64,7 @@ def loadOrCreatorUser(token):
         print 'user is not created'
         # create user
         user_info = client.users.show.get(uid=token.uid)
-        user = User(token.uid, user_info, token)
+        user = User(token.uid, json.dumps(user_info), json.dumps(token))
         user.active = True
         db.session.add(user)
         db.session.commit()
@@ -91,3 +93,9 @@ def authCallback():
     loadOrCreatorUser(token)
     print current_user
     return "Login Successful"
+
+@app.route('/api/user/logout')
+@login_required
+def user_logout():
+    logout_user()
+    return 'you are login out!'
