@@ -8,6 +8,7 @@ app = Flask(__name__)
 app.config.from_object('myapp.fileconfig')
 app.secret_key = 'A0Zrdgj/3yX R~XHH!jmN]LWX/,?RT'
 
+
 db = SQLAlchemy(app)
 
 # open debug model

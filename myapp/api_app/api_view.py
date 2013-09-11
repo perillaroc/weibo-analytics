@@ -1,9 +1,10 @@
 # encoding: utf-8
 from flask import request, url_for, render_template, jsonify
 from flask.ext.security import login_required, current_user, login_user, logout_user
-from flask.ext.security.decorators import anonymous_user_required
-from myapp import app,db
 from myapp.models import User
+from myapp import app, db
+from myapp.api_app import api_app
+
 
 from weibo import APIClient
 client = APIClient(app_key=app.config['APP_KEY'], \
@@ -19,7 +20,7 @@ import json
 
 # update foreground image array in memcache from flickr
 
-@app.route('/api/update-front-image')
+@api_app.route('/update-front-image')
 def updateFrontImage():
     total_image_count = 10
     front_image_list = []
@@ -49,7 +50,7 @@ def updateFrontImage():
     front_image_list_2 = mc.get("front_image_list")
     return jsonify(front_image_list=front_image_list_2)
 
-@app.route("/api/create-database")
+@api_app.route("/create-database")
 def createDatabase():
     print "begin create database"
     db.create_all()
@@ -78,7 +79,7 @@ def loadOrCreatorUser(token):
         login_user(user)
     
 
-@app.route('/api/user/auth-callback')
+@api_app.route('/user/auth-callback')
 def authCallback():
     '''检查用户是否存在，不存在则创建，并载入用户
     还需要错误检查
@@ -94,7 +95,7 @@ def authCallback():
     print current_user
     return "Login Successful"
 
-@app.route('/api/user/logout')
+@api_app.route('/user/logout')
 @login_required
 def user_logout():
     logout_user()
