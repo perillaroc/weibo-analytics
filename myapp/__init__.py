@@ -22,10 +22,13 @@ else:
     app.debug = True
 
 # import view
-from myapp import views, api_views, models
+from myapp import views, models
 
 user_datastore = SQLAlchemyUserDatastore(db, models.User, models.Role)
 security = Security(app, user_datastore)
+
+from myapp.api_app import api_app
+app.register_blueprint(api_app,url_prefix='/api')
 
 # from weibo import APIClient
 

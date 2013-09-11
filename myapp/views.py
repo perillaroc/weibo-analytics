@@ -57,7 +57,3 @@ def index():
     print g.user.info
     g.user.info = json.loads(g.user.info)
     return render_template('index.html', user=g.user)
-
-
-from myapp.api_app import api_app
-app.register_blueprint(api_app,url_prefix='/api')

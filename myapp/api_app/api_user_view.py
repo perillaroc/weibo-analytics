@@ -1,14 +1,12 @@
 # encoding: utf-8
-from flask import request, url_for, render_template, jsonify
+from flask import request, url_for, render_template, jsonify, redirect, flash
 from flask.ext.security import login_required, current_user, login_user, logout_user
+import json
+import random
+
 from myapp.models import User
 from myapp import app, db
 from myapp.api_app import api_app
-
-
-from weibo import APIClient
-client = APIClient(app_key=app.config['APP_KEY'], \
-        app_secret=app.config['APP_SECRET'], redirect_uri=app.config['CALLBACK_URL'])
 
 if app.config['ONLINE']:
     import pylibmc
@@ -16,15 +14,17 @@ else:
     import sae.memcache as pylibmc
 from myapp.thirdparty import flickr as flickr
 
-import json
-
-# update foreground image array in memcache from flickr
+from weibo import APIClient
+client = APIClient(app_key=app.config['APP_KEY'], \
+        app_secret=app.config['APP_SECRET'], redirect_uri=app.config['CALLBACK_URL'])
 
 @api_app.route('/update-front-image')
 def updateFrontImage():
+    '''
+    update foreground image array in memcache from flickr
+    '''
     total_image_count = 10
     front_image_list = []
-    import random
     photos = flickr.interestingness()
     photos_select_no_list = random.sample(
         range(0, len(photos) - 1), total_image_count)
@@ -81,7 +81,8 @@ def loadOrCreatorUser(token):
 
 @api_app.route('/user/auth-callback')
 def authCallback():
-    '''检查用户是否存在，不存在则创建，并载入用户
+    '''
+    检查用户是否存在，不存在则创建，并载入用户
     还需要错误检查
     '''
     authorization_code = request.args.get('code','')
@@ -93,10 +94,12 @@ def authCallback():
     print token
     loadOrCreatorUser(token)
     print current_user
-    return "Login Successful"
+    flash("Login form sina weibo")
+    return redirect("/")
 
 @api_app.route('/user/logout')
 @login_required
 def user_logout():
     logout_user()
-    return 'you are login out!'
+    flash("you are login out!")
+    return redirect('/')
