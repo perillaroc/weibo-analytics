@@ -5,11 +5,11 @@
 
 {% include 'header.html' %}
 
-<!-- welcome.html -->
+<!-- index.html -->
     <section class="content-top">
         <div class="module">
-            <div class="content" id="userlogo">
-                <div class="userlogo_pic">
+            <div class="row content" id="userlogo">
+                <div class="pull-left userlogo_pic">
                     <img src="{{ user.info['profile_image_url'] }}" alt="{{ user.info['screen_name'] }}"/>
                 </div>
                 <div class="userlogo_detail">
@@ -17,20 +17,27 @@
                     <p class="description">{{ user.info['description'] }}</p>
                 </div>
             </div>
-            <div class="content clearleft" id="userinfo">
+            <div class="row content clearleft" id="userinfo">
                 <div class="table" id="userinfoTable">
-                <div>
-                  <ul>
-                    <li class="button" scope="col">关注：{{ user.info['friends_count'] }}</li>
-                    <li class="button" scope="col"><a href="{# url_for('userfollowers') #}">粉丝：{{ user.info['followers_count'] }}</a></li>
-                    <li class="button" scope="col"><a href="{# url_for('usertimeline') #}">微博：{{ user.info['statuses_count']  }}</a></li>
-                    <li class="button" scope="col">收藏：{{ user.info['favourites_count'] }}</li>
-                  </ul>
+                      <ul class="list-inline">
+                        <li class="button" scope="col">关注：{{ user.info['friends_count'] }}</li>
+                        <li class="button" scope="col"><a href="{# url_for('userfollowers') #}">粉丝：{{ user.info['followers_count'] }}</a></li>
+                        <li class="button" scope="col"><a href="{# url_for('usertimeline') #}">微博：{{ user.info['statuses_count']  }}</a></li>
+                        <li class="button" scope="col">收藏：{{ user.info['favourites_count'] }}</li>
+                      </ul>
                 </div>
-               </div>
             </div> <!-- END .content #userinfo-->
         </div> <!-- END module -->
     </section> <!-- END .content-top -->
-<!-- /welcome.html -->
+
+    <section>
+        <div class="row">
+            <button class="btn btn-primary btn_update_weibo" type="button">更新</button>
+            <button class="btn btn-primary btn_analytics_weibo" type="button">统计</button>
+            <button class="btn btn-primary btn_query_weibo" type="button">查询</button>
+            <button class="btn btn-primary btn_manager_weibo" type="button">管理</button>
+        </div>
+    </section>
+<!-- /index.html -->
 
 {% include 'footer.html' %}
