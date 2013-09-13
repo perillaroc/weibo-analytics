@@ -15,7 +15,6 @@ db = SQLAlchemy(app)
 if 'SERVER_SOFTWARE' in os.environ:
     # SAE
     app.config['ONLINE'] = True
-    pass
 else:
     # Local
     app.config['ONLINE'] = False
@@ -28,9 +27,4 @@ user_datastore = SQLAlchemyUserDatastore(db, models.User, models.Role)
 security = Security(app, user_datastore)
 
 from myapp.api_app import api_app
-app.register_blueprint(api_app,url_prefix='/api')
-
-# from weibo import APIClient
-
-# client = APIClient(app_key=app.config['APP_KEY'], \
-#         app_secret=app.config['APP_SECRET'], redirect_uri=app.config['CALLBACK_URL'])
+app.register_blueprint(api_app, url_prefix = '/api')

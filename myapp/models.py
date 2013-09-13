@@ -1,9 +1,7 @@
 # encoding: utf-8
 from myapp import db
 from sqlalchemy.schema import Sequence as Sequence
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.security import Security, SQLAlchemyUserDatastore, \
-    UserMixin, RoleMixin, login_required
+from flask.ext.security import UserMixin, RoleMixin
 
 
 ROLE_USER = 0

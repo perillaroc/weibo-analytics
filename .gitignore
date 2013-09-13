@@ -38,3 +38,7 @@ nosetests.xml
 
 #wsgic
 *.wsgic*
+
+.settings
+.project
+.pydevproject
