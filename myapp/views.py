@@ -2,7 +2,7 @@
 from flask import request, url_for, render_template, g, redirect
 from flask.ext.security import login_required, current_user
 from myapp import app
-from myapp.thirdparty import flickr as flickr
+
 if app.config['ONLINE']:
     import pylibmc
 else:

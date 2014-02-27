@@ -2,8 +2,6 @@
 from flask import request, url_for, render_template, jsonify, redirect, flash
 from flask.ext.security import login_required, current_user, login_user, logout_user
 import json
-import random
-import datetime
 
 from myapp.models import User
 from myapp import app, db
@@ -13,7 +11,6 @@ if app.config['ONLINE']:
     import pylibmc
 else:
     import sae.memcache as pylibmc
-from myapp.thirdparty import flickr as flickr
 
 from weibo import APIClient
 client = APIClient(app_key = app.config['APP_KEY'], \
@@ -24,6 +21,10 @@ def updateFrontImage():
     '''
     update foreground image array in memcache from flickr
     '''
+
+    import random
+    from myapp.thirdparty import flickr as flickr
+
     total_image_count = 10
     front_image_list = []
     photos = flickr.interestingness()
@@ -60,6 +61,7 @@ def createDatabase():
 def loadOrCreatorUser(token):
     '''根据token载入或创建用户
     '''
+    import datetime
 
     user = User.query.filter_by(uid = int(token.uid)).first()
     if user is None:

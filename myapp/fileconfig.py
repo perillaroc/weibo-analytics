@@ -31,7 +31,6 @@ if 'SERVER_SOFTWARE' in os.environ:
     CALLBACK_URL = 'http://analytics.sinaapp.com/api/user/auth-callback'
 else:
     # Local
-    print "LOCAL"
     APP_KEY = '130967181'
     APP_SECRET = '7ecd6b730bfeee87ae5a4f701deeaae4'
     CALLBACK_URL = 'http://127.0.0.1:5000/api/user/auth-callback'
