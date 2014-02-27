@@ -8,8 +8,7 @@ ROLE_USER = 0
 ROLE_ADMIN = 1  # use?
 
 roles_users = db.Table('roles_users',
-                       db.Column('user_id', db.BigInteger(
-                                 64), db.ForeignKey('user.id')),
+                       db.Column('user_id', db.BigInteger(64), db.ForeignKey('user.id')),
                        db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
 
 

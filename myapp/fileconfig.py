@@ -34,4 +34,4 @@ else:
     print "LOCAL"
     APP_KEY = '130967181'
     APP_SECRET = '7ecd6b730bfeee87ae5a4f701deeaae4'
-    CALLBACK_URL = 'http://127.0.0.1:8080/api/user/auth-callback'
+    CALLBACK_URL = 'http://127.0.0.1:5000/api/user/auth-callback'
