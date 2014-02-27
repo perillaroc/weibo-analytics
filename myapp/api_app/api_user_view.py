@@ -62,7 +62,6 @@ def loadOrCreatorUser(token):
     '''根据token载入或创建用户
     '''
     import datetime
-
     user = User.query.filter_by(uid = int(token.uid)).first()
     if user is None:
         print 'user is not created'
@@ -78,8 +77,10 @@ def loadOrCreatorUser(token):
     else:
         print 'user has been created'
         # load user
+        user.token = json.dumps(token)
+        user_info = client.users.show.get(uid = token.uid)
+        user.info = json.dumps(user_info)
         user.active = True
-        user.token = token
         user.last_login_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         db.session.commit()
         login_user(user)

@@ -20,11 +20,17 @@ else:
     app.config['ONLINE'] = False
     app.debug = True
 
-# import view
-from myapp import views, models
+# import views
+from myapp import views, test_views
 
+# import blueprint
+from myapp.api_app import api_app
+app.register_blueprint(api_app, url_prefix = '/api')
+
+
+# import models
+from myapp import models
 user_datastore = SQLAlchemyUserDatastore(db, models.User, models.Role)
 security = Security(app, user_datastore)
 
-from myapp.api_app import api_app
-app.register_blueprint(api_app, url_prefix = '/api')
+
