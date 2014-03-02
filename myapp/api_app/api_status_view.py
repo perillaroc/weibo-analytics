@@ -9,6 +9,7 @@ from flask.ext.security import login_required
 
 from myapp.models import User, WeiboList
 from myapp import app, db
+from myapp.api_app import api_app
 
 from weibo import APIClient
 
@@ -16,19 +17,20 @@ client = APIClient(app_key=app.config['APP_KEY'],
                    app_secret=app.config['APP_SECRET'],
                    redirect_uri=app.config['CALLBACK_URL'])
 
-@app.route('/status/total-number')
+@api_app.route('/status/total-number')
 @login_required
 def get_status_total_number():
     token = json.loads(g.user.token)
     client.set_access_token(token['access_token'], token['expires'])
     statuses = client.statuses.user_timeline.get(count=10, page=1)
-    results = {'total_number': statuses['total_number']}
+    results = {'total_number': statuses['total_number'],
+               'count': 100}
     error_results = {'request':'/status/total-number',
                      'error_code':-1,
                      'error':'error'}
     return jsonify(results)
 
-@app.route('/status/update')
+@api_app.route('/status/update')
 @login_required
 def update_status():
     page_no = int(request.args.get('page', '1'))
@@ -109,5 +111,5 @@ def update_status():
                "page": page_no,
                "max_id": statuses[0]['id'],
                "since_id": statuses[len(statuses)-1]['id'],
-               'total_num': weibo_results['total_number']}
+               'total_number': weibo_results['total_number']}
     return jsonify(results)

@@ -27,7 +27,7 @@
   {# 添加特定js文件 #}
   {% if local_js_file_list %}
     {% for a_file in local_js_file_list %}
-      <script src="{{ a_file['src'] }}"></script>
+      <script src="{{ a_file }}"></script>
     {% endfor %}
   {% endif%}
   
