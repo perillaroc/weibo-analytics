@@ -18,7 +18,8 @@ SQLALCHEMY_DATABASE_URI = "mysql+mysqldb://" + \
                           ":" + sae.const.MYSQL_PASS + \
                           "@" + sae.const.MYSQL_HOST + \
                           ":" + sae.const.MYSQL_PORT + \
-                          "/" + sae.const.MYSQL_DB
+                          "/" + sae.const.MYSQL_DB + \
+                          "?" + "charset=utf8"
 
 # flask security
 
