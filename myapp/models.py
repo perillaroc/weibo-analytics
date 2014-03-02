@@ -54,7 +54,7 @@ class WeiboList(db.Model):
     status_type = db.Column(db.Integer())
 
     status_id = db.Column(db.BigInteger(64), unique = True)
-    create_at = db.Column(db.DateTime())
+    created_at = db.Column(db.DateTime())
     source = db.Column(db.Text())
 
     original_pic = db.Column(db.Text())

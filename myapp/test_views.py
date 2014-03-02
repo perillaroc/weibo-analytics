@@ -49,7 +49,7 @@ def get_weibo_list():
 
             created_at = datetime.datetime.strptime(string.replace(status['created_at'], "+0800 ", ""),
                                                     '%a %b %d %H:%M:%S %Y')
-            current_status.create_at = created_at.strftime("%Y-%m-%d %H:%M:%S")
+            current_status.created_at = created_at.strftime("%Y-%m-%d %H:%M:%S")
             current_status.source = status['source'].encode("utf-8")
 
             current_status.original_pic = status.get('original_pic', '')
