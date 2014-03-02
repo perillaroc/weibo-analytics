@@ -81,7 +81,7 @@ class WeiboList(db.Model):
 class Calendar(db.Model):
     __tablename__ = 'calendar'
     id = db.Column(db.BigInteger(64), Sequence('id_seq'), primary_key=True)
-    date = db.Column(db.DateTime(), unique=True)
+    date = db.Column(db.Date(), unique=True)
     year = db.Column(db.Integer())
     month = db.Column(db.Integer())
     day = db.Column(db.Integer())

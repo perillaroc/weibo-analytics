@@ -4,8 +4,8 @@ $(document).ready(function(){
     $(".btn_update_weibo").click(function(){
 
         $('#process_dialog .progress_bar').removeClass("progress-bar-success");
-        $('#process_dialog .modal-title').text("获取微博中...")
-        $('#process_dialog .btn-success').attr("disabled","disabled")
+        $('#process_dialog .modal-title').text("获取微博中...");
+        $('#process_dialog .btn-success').attr("disabled","disabled");
         change_process_dialog(5);
         $("#process_dialog").modal();
 
@@ -34,9 +34,9 @@ $(document).ready(function(){
                 } else {
                     $('#process_dialog .modal-body div:first').removeClass("active");
                     $('#process_dialog .progress_bar').addClass("progress-bar-success");
-                    $('#process_dialog .modal-title').text("成功获取微博！")
+                    $('#process_dialog .modal-title').text("成功获取微博！");
 
-                    $('#process_dialog .btn-success').removeAttr("disabled")
+                    $('#process_dialog .btn-success').removeAttr("disabled");
                     $('#process_dialog .btn-success').click(function(){
                         $('#process_dialog').modal('hide')
                     })

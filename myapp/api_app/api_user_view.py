@@ -53,12 +53,6 @@ def update_front_image():
     front_image_list_2 = mc.get("front_image_list")
     return jsonify(front_image_list = front_image_list_2)
 
-@api_app.route("/create-database")
-def create_database():
-    print "begin create database"
-    db.create_all()
-    return "OK"
-
 def load_or_creator_user(token):
     '''根据token载入或创建用户
     '''
