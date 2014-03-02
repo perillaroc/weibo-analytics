@@ -77,3 +77,17 @@ class WeiboList(db.Model):
 
     def __repr__(self):
         return '<WeiboList %r>' % self.uid
+
+class Calendar(db.Model):
+    __tablename__ = 'calendar'
+    id = db.Column(db.BigInteger(64), Sequence('id_seq'), primary_key=True)
+    date = db.Column(db.DateTime(), unique=True)
+    year = db.Column(db.Integer())
+    month = db.Column(db.Integer())
+    day = db.Column(db.Integer())
+
+    def __init__(self):
+        pass
+
+    def __repr__(self):
+        return '<Calendar %r>' % self.date
