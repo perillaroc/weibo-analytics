@@ -13,11 +13,12 @@ else:
     import sae.memcache as pylibmc
 
 from weibo import APIClient
-client = APIClient(app_key = app.config['APP_KEY'], \
-        app_secret = app.config['APP_SECRET'], redirect_uri = app.config['CALLBACK_URL'])
+client = APIClient(app_key = app.config['APP_KEY'],
+                   app_secret = app.config['APP_SECRET'],
+                   redirect_uri = app.config['CALLBACK_URL'])
 
 @api_app.route('/update-front-image')
-def updateFrontImage():
+def update_front_image():
     '''
     update foreground image array in memcache from flickr
     '''
@@ -53,12 +54,12 @@ def updateFrontImage():
     return jsonify(front_image_list = front_image_list_2)
 
 @api_app.route("/create-database")
-def createDatabase():
+def create_database():
     print "begin create database"
     db.create_all()
     return "OK"
 
-def loadOrCreatorUser(token):
+def load_or_creator_user(token):
     '''根据token载入或创建用户
     '''
     import datetime
@@ -87,7 +88,7 @@ def loadOrCreatorUser(token):
 
 
 @api_app.route('/user/auth-callback')
-def authCallback():
+def auth_call_back():
     '''
     检查用户是否存在，不存在则创建，并载入用户
     还需要错误检查
@@ -99,7 +100,7 @@ def authCallback():
     uid = token.uid  # 用户的uid
     client.set_access_token(access_token, expires_in)
     print token
-    loadOrCreatorUser(token)
+    load_or_creator_user(token)
     print current_user
     flash("Login form sina weibo")
     return redirect("/")
