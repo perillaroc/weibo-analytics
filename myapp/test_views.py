@@ -19,12 +19,19 @@ client = APIClient(app_key=app.config['APP_KEY'],
 @app.route('/test-get-weibo-list')
 @login_required
 def get_weibo_list():
+    page_no = int(request.args.get('page', '1'))
+    if page_no<1:
+        page_no = 1
+    count_per_page = int(request.args.get('count', '100'))
+    if count_per_page>100:
+        count_per_page = 100
+
     user = g.user
     print user.token
     token_1 = g.user.token
     token = json.loads(token_1)
     client.set_access_token(token['access_token'],token['expires'])
-    results = client.statuses.user_timeline.get()
+    results = client.statuses.user_timeline.get(count=count_per_page, page=page_no)
     statuses = results['statuses']
     results = '<pre>'
     for status in statuses:
@@ -64,6 +71,25 @@ def get_weibo_list():
         else:
             print "Status has been created"
             current_status.update_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            current_status.status_type = -1
+
+            current_status.original_pic = status.get('original_pic', '')
+            current_status.bmiddle_pic = status.get('bmiddle_pic', '')
+            current_status.thumbnail_pic = status.get('thumbnail_pic', '')
+
+            current_status.geo = json.dumps(status['geo'])
+
+            current_status.retweeted_status = json.dumps(status.get('retweeted_status', ''),ensure_ascii=False)
+
+            current_status.reposts_count = status['reposts_count']
+            current_status.comments_count = status['comments_count']
+            current_status.attitudes_count = status['attitudes_count']
+            current_status.visible_type = status['visible'].type
+
+            current_status.pic_urls = json.dumps(status['pic_urls'])
 
     db.session.commit()
-    return "Hello world"
+
+    results = {"count":count_per_page,
+               "page":page_no}
+    return jsonify(results)
