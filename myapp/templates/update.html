@@ -42,6 +42,33 @@
             <button class="btn btn-primary btn_manager_weibo" type="button">管理</button>
         </div>
     </section>
+
+    <section>
+        <div class="modal fade" id="process_dialog" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true"
+                data-backdrop="static">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="process_dialog_title">更新微博</h4>
+              </div>
+              <div class="modal-body">
+                <div class="progress progress-striped active">
+                  <div id="process_dialog_progress_bar" class="progress-bar" role="progressbar"
+                       aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                    0%
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <!-- button type="button" class="btn btn-default" data-dismiss="modal">关闭</button -->
+                <button type="button" class="btn btn-success">确定</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </section>
 <!-- /update.html -->
 
 {% set local_js_file_list=[url_for('static',filename='js/update.js')] %}
