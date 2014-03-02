@@ -38,14 +38,14 @@ def login():
     else:
         random.shuffle(front_image_list)
 
-    client = APIClient(app_key = app.config['APP_KEY'], \
-                       app_secret = app.config['APP_SECRET'], \
+    client = APIClient(app_key = app.config['APP_KEY'],
+                       app_secret = app.config['APP_SECRET'],
                        redirect_uri = app.config['CALLBACK_URL'])
     authorize_url = client.get_authorize_url()
     # print authorize_url
 
-    return render_template('welcome.html', \
-                           front_image_list = front_image_list, \
+    return render_template('welcome.html',
+                           front_image_list = front_image_list,
                            authorize_url = authorize_url)
 
 @app.route('/logout')
@@ -57,6 +57,6 @@ def logout():
 @app.route('/index')
 @login_required
 def index():
-    print g.user.info
+    #print g.user.info
     g.user.info = json.loads(g.user.info)
     return render_template('index.html', user = g.user)

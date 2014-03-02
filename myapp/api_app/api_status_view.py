@@ -7,7 +7,7 @@ from flask import request, g, jsonify
 
 from flask.ext.security import login_required
 
-from myapp.models import WeiboList
+from myapp.models import User, WeiboList
 from myapp import app, db
 
 from weibo import APIClient
@@ -39,9 +39,10 @@ def update_status():
         count_per_page = 100
 
     user = g.user
-    print user.token
-    token_1 = g.user.token
-    token = json.loads(token_1)
+    token = json.loads(g.user.token)
+
+    current_user = User.query.filter_by(uid=user.uid).first()
+
     client.set_access_token(token['access_token'], token['expires'])
     weibo_results = client.statuses.user_timeline.get(count=count_per_page, page=page_no)
     statuses = weibo_results['statuses']
@@ -101,6 +102,7 @@ def update_status():
 
             current_status.pic_urls = json.dumps(status['pic_urls'])
 
+    current_user.update_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     db.session.commit()
 
     results = {"count": count_per_page,
