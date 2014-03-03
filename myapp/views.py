@@ -59,11 +59,11 @@ def logout():
 def index():
     #print g.user.info
     g.user.info = json.loads(g.user.info)
-    return render_template('index.html', user = g.user)
+    return render_template('index.html', user=g.user, current_navi="index")
 
 @app.route('/update')
 @login_required
 def update():
     #print g.user.info
     g.user.info = json.loads(g.user.info)
-    return render_template('update.html', user = g.user)
+    return render_template('update.html', user=g.user, current_navi="update")
