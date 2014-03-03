@@ -7,6 +7,7 @@ CSRF_ENABLED = True
 if 'SERVER_SOFTWARE' in os.environ:
     # SAE
     ONLINE = True
+    debug = True
 else:
     # Local
     ONLINE = False
