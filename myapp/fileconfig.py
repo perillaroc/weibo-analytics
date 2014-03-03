@@ -27,8 +27,8 @@ SQLALCHEMY_DATABASE_URI = "mysql+mysqldb://" + \
 # sina weibo app
 if 'SERVER_SOFTWARE' in os.environ:
     # SAE
-    APP_KEY = '130967181'
-    APP_SECRET = '7ecd6b730bfeee87ae5a4f701deeaae4'
+    APP_KEY = '4277221985'
+    APP_SECRET = 'df929359e41857c44fc61f584cb23496'
     CALLBACK_URL = 'http://analytics.sinaapp.com/api/user/auth-callback'
 else:
     # Local
