@@ -15,6 +15,7 @@ db = SQLAlchemy(app)
 if 'SERVER_SOFTWARE' in os.environ:
     # SAE
     app.config['ONLINE'] = True
+    app.debug = True
 else:
     # Local
     app.config['ONLINE'] = False
