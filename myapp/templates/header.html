@@ -4,9 +4,6 @@
   current_navi = "index" or "update" or ...
 #}
 
-{% if not current_navi %}
-{% set current_navi="index" %}
-{% endif %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,7 +41,7 @@
             <ul class="nav navbar-nav">
               <li {% if current_navi=="index" %} class="active" {% endif %}><a href="{{ url_for("index") }}">首页</a></li>
               <li {% if current_navi=="update" %} class="active" {% endif %}><a href="{{ url_for("update") }}">获取</a></li>
-              <li {% if current_navi=="statistic" %} class="active" {% endif %}><a href="{#{ url_for("statistic") }#}">统计</a></li>
+              <li {% if current_navi=="statistic" %} class="active" {% endif %}><a href="{{ url_for("statistic") }}">统计</a></li>
               <li {% if current_navi=="manage" %} class="active" {% endif %}><a href="{#{ url_for("manage") }#}">管理</a></li>
             </ul>
           </div>

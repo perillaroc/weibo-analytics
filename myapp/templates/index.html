@@ -3,6 +3,10 @@
     user
 #}
 
+{% if not current_navi %}
+{% set current_navi="index" %}
+{% endif %}
+
 {% include 'header.html' %}
 
 <!-- index.html -->

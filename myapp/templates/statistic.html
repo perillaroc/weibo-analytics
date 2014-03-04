@@ -1,0 +1,27 @@
+{# templete index.html
+  require:
+    user
+#}
+
+{% set current_navi="statistic" %}
+
+{% include 'header.html' %}
+
+<!-- index.html -->
+    <div class="row">
+        <div class="side_bar col-md-2">
+            <ui class="nav nav-pills nav-stacked">
+                <li><a href="#">概述</a></li>
+                <li><a href="#">种类</a></li>
+            </ui>
+        </div>
+        <div class="col-md-10">
+
+        </div>
+    </div>
+
+<!-- /index.html -->
+
+{% set local_js_file_list=[url_for('static',filename='js/statistic.js')] %}
+
+{% include 'footer.html' %}

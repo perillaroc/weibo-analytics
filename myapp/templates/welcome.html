@@ -4,6 +4,10 @@
     authorize_url
 #}
 
+{% if not current_navi %}
+{% set current_navi="index" %}
+{% endif %}
+
 {% include 'header.html' %}
 
 <!-- welcome.html -->

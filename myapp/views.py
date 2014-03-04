@@ -67,3 +67,10 @@ def update():
     #print g.user.info
     g.user.info = json.loads(g.user.info)
     return render_template('update.html', user=g.user, current_navi="update")
+
+@app.route('/statistic')
+@login_required
+def statistic():
+    #print g.user.info
+    g.user.info = json.loads(g.user.info)
+    return render_template('statistic.html', user=g.user, current_navi="statistic")
