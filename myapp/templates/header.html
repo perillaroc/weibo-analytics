@@ -16,7 +16,12 @@
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
   {# 特定css #}
   <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet" media="screen">
-  {# /特定css #}
+  {% if local_css_file_list %}
+    {% for a_file in local_css_file_list %}
+      <link href="{{ a_file }}" rel="stylesheet"/>
+    {% endfor %}
+  {% endif%}
+
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
   <script src="../../assets/js/html5shiv.js"></script>
