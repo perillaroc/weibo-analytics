@@ -21,6 +21,12 @@ module.exports = function(grunt){
                         cwd: 'bower_components/require-js/',
                         src: ['css/**','js/*','js/locals/bootstrap-datepicker.zh-CN.js'],
                         dest:'static/'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'bower_components/highcharts/',
+                        src: ['highcharts.js'],
+                        dest:'static/js/'
                     }
                 ]
             }
