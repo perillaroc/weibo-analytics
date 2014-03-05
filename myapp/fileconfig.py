@@ -22,6 +22,8 @@ SQLALCHEMY_DATABASE_URI = "mysql+mysqldb://" + \
                           "/" + sae.const.MYSQL_DB + \
                           "?" + "charset=utf8"
 
+SQLALCHEMY_POOL_RECYCLE = 10
+
 # flask security
 
 
