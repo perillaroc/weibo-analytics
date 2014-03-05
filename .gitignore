@@ -44,3 +44,6 @@ nosetests.xml
 .pydevproject
 
 .idea
+
+# js
+bower_components
