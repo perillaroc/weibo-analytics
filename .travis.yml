@@ -11,4 +11,4 @@ before_script:
 
 # command to run tests
 script: #nosetests
-  - python test.py --mysql=travis:@localhost --port=5000
+  - python test.py --mysql=travis:''@localhost --port=5000
