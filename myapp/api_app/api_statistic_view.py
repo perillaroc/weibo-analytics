@@ -53,12 +53,19 @@ def get_status_count():
         outerjoin(WeiboList, date_list_query.c.date == func.DATE(WeiboList.created_at)).\
         group_by(date_list_query.c.date).\
         order_by(date_list_query.c.date).all()
-    print list_by_day
+
+    record_list = []
+    for one_record in list_by_day:
+        record_list.append({
+            "date": one_record[0].strftime("%Y-%m-%d"),
+            "counts": one_record[1]
+        })
 
     result = {
         "start_date": start_date,
         "end_date": end_date,
-        "time_interval": time_interval
+        "time_interval": time_interval,
+        "record":record_list
     }
 
     return jsonify(result)
