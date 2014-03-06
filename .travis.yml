@@ -11,4 +11,5 @@ before_script:
   - cd myapp; alembic upgrade head
 
 # command to run tests
-script: nosetests
+script: #nosetests
+  - python test.py --mysql=travis:@localhost --port=5000
