@@ -11,12 +11,21 @@ $(document).ready(function(){
 
     var today = new Date();
     var end_date = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
+    var one_month_day = new Date();
+    one_month_day.setDate(today.getDate() - new Date(today.getFullYear(), today.getMonth()+1, 0).getDate());
+
     $('.input-daterange').datepicker({
         format: "yyyy-mm-dd",
+        startDate: "2009-01-01",
         endDate: end_date,
         language: "zh-CN",
         autoclose: true
     });
+
+    $('#start_date').val(one_month_day.getFullYear()+"-"+
+        (one_month_day.getMonth()+1)+"-"+
+        one_month_day.getDate());
+    $('#end_date').val(end_date);
 });
 
 $(document).ready(function(){
@@ -31,5 +40,16 @@ $(document).ready(function(){
         }
         console.log("Require date from " + start_date + " to "+ end_date +
             " interval by "+ time_interval);
+
+        // get records from API
+        param = {
+            "start_date": start_date,
+            "end_date": end_date,
+            "time_interval": time_interval
+        }
+        $.get('/api/statistic/status-count',param,function(data){
+            console.log(data);
+        });
+
     });
 });
