@@ -57,6 +57,12 @@ $(document).ready(function(){
                 series_data.push(a_data.count);
             });
 
+            var x_tick_interval = 1;
+            if(data.time_interval=="day")
+                x_tick_interval = 10;
+            else
+                x_tick_interval = 1;
+
             $('#chart_container').highcharts({
                 chart: {
                     type: 'line'
@@ -66,7 +72,7 @@ $(document).ready(function(){
                 },
                 xAxis: {
                     categories: x_categories,
-                    tickInterval: 10
+                    tickInterval: x_tick_interval
                 },
                 yAxis: {
                     title: {
