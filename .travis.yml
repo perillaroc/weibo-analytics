@@ -7,6 +7,8 @@ install: "pip install -r requirements.txt"
 
 before_script:
   - mysql -e 'create database app_analytics;'
+  - cp -f build/alembic-travis.ini myapp/alembic.ini
+  - cd myapp; alembic upgrade head
 
 # command to run tests
 script: nosetests
