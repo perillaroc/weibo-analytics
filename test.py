@@ -49,7 +49,7 @@ def setup_sae_environ(conf):
     if conf.mysql:
         import sae.const
 
-        p = re.compile('^(.+):(.+)@(.+):(\d+)$')
+        p = re.compile('^(.+):(.*)@(.+):(\d+)$')
         m = p.match(conf.mysql)
         if not m:
             raise Exception("Invalid mysql configuration")
