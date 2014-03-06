@@ -110,6 +110,29 @@ def get_status_count():
             "time_interval": time_interval,
             "record": record_list
         }
+    elif time_interval == "year":
+        date_list_query = db.session.query(distinct(Calendar.year).label("d")). \
+            filter(Calendar.date >= start_date.isoformat()). \
+            filter(Calendar.date <= end_date.isoformat()). \
+            subquery()
+
+        list_by_day = db.session.query(date_list_query.c.d, func.count(WeiboList.id).label("counts")). \
+            outerjoin(WeiboList, date_list_query.c.d == func.YEAR(WeiboList.created_at)). \
+            group_by(date_list_query.c.d). \
+            order_by(date_list_query.c.d).all()
+
+        for one_record in list_by_day:
+            record_list.append({
+                "date": one_record[0],
+                "count": one_record[1]
+            })
+
+        result = {
+            "start_date": start_date.isoformat(),
+            "end_date": end_date.isoformat(),
+            "time_interval": time_interval,
+            "record": record_list
+        }
     else:
         result = {}
 
