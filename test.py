@@ -170,6 +170,7 @@ class WsgiWorker(Worker):
         c = Client(wrap(self.application), BaseResponse)
         resp = c.get('/login?next=%2F')
         print resp.status_code
+        assert resp.status_code == 200
 
         print "test end"
 
