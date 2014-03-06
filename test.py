@@ -168,6 +168,8 @@ class WsgiWorker(Worker):
         from werkzeug.test import Client
         from werkzeug.wrappers import BaseResponse
         c = Client(wrap(self.application), BaseResponse)
+
+        # test login page
         resp = c.get('/login?next=%2F')
         print resp.status_code
         assert resp.status_code == 200
