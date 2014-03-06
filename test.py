@@ -107,7 +107,6 @@ class Worker:
 
 class WsgiWorker(Worker):
     def run(self):
-        # FIXME: All files under current directory
         files = ['index.wsgi']
 
         # XXX:
@@ -136,28 +135,44 @@ class WsgiWorker(Worker):
                    extra_files = files,
                    static_files = self.static_files)
 
-class TornadoWorker(Worker):
-    def run(self):
-        import tornado.autoreload
-        tornado.autoreload.watch('index.wsgi')
+    def test(self):
+        files = ['index.wsgi']
 
-        import re
-        from tornado.web import URLSpec, StaticFileHandler
-        # The user should not use `tornado.web.Application.add_handlers`
-        # since here in SAE one application only has a single host, so here
-        # we can just use the first host_handers.
-        handlers = self.application.handlers[0][1]
-        for prefix, path in self.static_files.iteritems():
-            pattern = re.escape(prefix) + r"(.*)"
-            handlers.insert(0, URLSpec(pattern, StaticFileHandler, {"path": path}))
+        # XXX:
+        # when django template renders `environ` in its 500 page, it will
+        # try to call `environ['werkzeug.server.shutdown'` and cause the
+        # server exit unexpectedly.
+        # See: https://docs.djangoproject.com/en/dev/ref/templates/api/#variables-and-lookups
+        def wrap(app):
+            def _(environ, start_response):
+                try:
+                    del environ['werkzeug.server.shutdown']
+                except KeyError:
+                    pass
+                return app(environ, start_response)
+            return _
 
-        os.environ['sae.run_main'] = '1'
+        if 'WERKZEUG_RUN_MAIN' in os.environ:
+            os.environ['sae.run_main'] = '1'
 
-        import tornado.ioloop
-        from tornado.httpserver import HTTPServer
-        server = HTTPServer(self.application, xheaders=True)
-        server.listen(self.conf.port, self.conf.host)
-        tornado.ioloop.IOLoop.instance().start()
+        self.application = _channel_wrapper(self.application)
+        # from werkzeug.serving import run_simple
+        # run_simple(self.conf.host, self.conf.port,
+        #            wrap(self.application),
+        #            use_reloader = True,
+        #            use_debugger = True,
+        #            extra_files = files,
+        #            static_files = self.static_files)
+        print "test begin"
+
+        from werkzeug.test import Client
+        from werkzeug.wrappers import BaseResponse
+        c = Client(wrap(self.application), BaseResponse)
+        resp = c.get('/login?next=%2F')
+        print resp.status_code
+
+        print "test end"
+
 
 def main(options):
     conf_path = os.path.join(app_root, 'config.yaml')
@@ -187,7 +202,7 @@ def main(options):
 
     cls_name = getattr(conf, 'worker', 'wsgi').capitalize() + 'Worker'
     try:
-        globals().get(cls_name, WsgiWorker)(conf, application).run()
+        globals().get(cls_name, WsgiWorker)(conf, application).test()
     except KeyboardInterrupt:
         pass
 
@@ -203,4 +218,3 @@ if __name__ == '__main__':
     (options, args) = parser.parse_args()
 
     main(options)
-
