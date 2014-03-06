@@ -9,7 +9,7 @@ from flask.ext.security import login_required
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import func
 
-from myapp.models import User, WeiboList
+from myapp.models import User, WeiboList,Calendar
 from myapp import app, db
 from myapp.api_app import api_app
 
@@ -48,6 +48,11 @@ def get_status_count():
         "end_date": end_date,
         "time_interval": time_interval
     }
-    uids = db.session.query(func.count(WeiboList.status_id)).all()
+
+    uids = db.session.query(Calendar,WeiboList).\
+        filter(Calendar.date >= "2014-02-01").\
+        filter(Calendar.date <= "2014-02-28").\
+        filter(Calendar.date == func.DATE(WeiboList.created_at)).\
+        order_by(Calendar.date).all()
     print uids
     return jsonify(result)
