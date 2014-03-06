@@ -24,7 +24,7 @@ client = APIClient(app_key=app.config['APP_KEY'],
 @login_required
 def get_status_count():
     """
-    SQL Statement:
+    SQL Statement For Day:
         SELECT `c`.`date` AS date,
         COUNT(`l`.`id`) AS count
         FROM (
@@ -38,21 +38,27 @@ def get_status_count():
         GROUP BY date
         ORDER BY date
     """
-    default_start_date = datetime.date.today()
-    default_end_date = default_start_date - datetime.timedelta(days=30)
+    default_end_date = datetime.date.today()
+    default_start_date = default_end_date - datetime.timedelta(days=30)
     start_date = request.args.get('start_date', default_start_date.strftime("%Y-%m-%d"))
     end_date = request.args.get('end_date', default_end_date.strftime("%Y-%m-%d"))
     time_interval = request.args.get('time_interval', 'day')
+
+    date_list_query = db.session.query(Calendar.date.label("date")).\
+        filter(Calendar.date >= start_date).\
+        filter(Calendar.date <= end_date).\
+        subquery()
+
+    list_by_day = db.session.query(date_list_query.c.date, func.count(WeiboList.id).label("counts")).\
+        outerjoin(WeiboList, date_list_query.c.date == func.DATE(WeiboList.created_at)).\
+        group_by(date_list_query.c.date).\
+        order_by(date_list_query.c.date).all()
+    print list_by_day
+
     result = {
         "start_date": start_date,
         "end_date": end_date,
         "time_interval": time_interval
     }
 
-    uids = db.session.query(Calendar,WeiboList).\
-        filter(Calendar.date >= "2014-02-01").\
-        filter(Calendar.date <= "2014-02-28").\
-        filter(Calendar.date == func.DATE(WeiboList.created_at)).\
-        order_by(Calendar.date).all()
-    print uids
     return jsonify(result)
