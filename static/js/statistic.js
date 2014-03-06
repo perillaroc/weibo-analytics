@@ -49,7 +49,40 @@ $(document).ready(function(){
         }
         $.get('/api/statistic/status-count',param,function(data){
             console.log(data);
+
+            var x_categories = new Array();
+            var series_data = new Array();
+            $.each(data.record, function(a_key, a_data){
+                x_categories.push(a_data.date);
+                series_data.push(a_data.count);
+            });
+
+            $('#chart_container').highcharts({
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: '统计'
+                },
+                xAxis: {
+                    categories: x_categories,
+                    tickInterval: 10
+                },
+                yAxis: {
+                    title: {
+                        text: '发微博数'
+                    },
+                    min: 0
+                },
+                series: [{
+                    name: '微博数',
+                    data: series_data,
+                    showInLegend: false
+                }]
+            });
         });
 
     });
+
+    $("#time_range_submit_button").trigger("click");
 });

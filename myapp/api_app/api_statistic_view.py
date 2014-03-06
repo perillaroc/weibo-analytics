@@ -58,7 +58,7 @@ def get_status_count():
     for one_record in list_by_day:
         record_list.append({
             "date": one_record[0].strftime("%Y-%m-%d"),
-            "counts": one_record[1]
+            "count": one_record[1]
         })
 
     result = {
