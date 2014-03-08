@@ -10,3 +10,7 @@ by perillaroc
 新浪微博统计
 
 网站：http://analytics.sinaapp.com
+
+#框架
+
+![Flask 0.10.1](http://b.repl.ca/v1/Flask-0.10.1-blue.png)

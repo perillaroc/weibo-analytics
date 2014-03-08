@@ -20,12 +20,16 @@
                 <form class="form-inline" role="form" id="time_range_form">
                     <div class="col-md-6">
                         <div class="input-daterange input-group" id="datepicker">
-                            <input type="text" class="input-sm form-control" name="start_date" id="start_date"/>
+                            <input type="text" class="form-control" name="start_date" id="start_date"/>
                             <span class="input-group-addon">到</span>
-                            <input type="text" class="input-sm form-control" name="end_date" id="end_date"/>
+                            <input type="text" class="form-control" name="end_date" id="end_date"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default"
+                                        id="time_range_submit_button">确定</button>
+                            </span>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 pull-right">
                         <div class="form-group">
                             <div class="btn-group" data-toggle="buttons" id="time_interval_group">
                               <label class="btn btn-default active">
@@ -42,7 +46,6 @@
                               </label>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-default" id="time_range_submit_button">确定</button>
                     </div>
                 </form>
 
