@@ -3,7 +3,7 @@ weibo-analytics
 
 by perillaroc
 
-https://travis-ci.org/perillaroc/weibo-analytics.png?branch=master
+[![Build Status](https://travis-ci.org/perillaroc/weibo-analytics.png?branch=master)](https://travis-ci.org/perillaroc/weibo-analytics)
 
 #简介
 
