@@ -29,11 +29,32 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-    $("#time_range_submit_button").click(function(){
+    $('#time_interval_group').children('label').on('click', function (event) {
+        update_chart({
+            time_interval: $(this).children('input').first().val()
+        })
+    });
+
+    $('#time_range_submit_button').click(function(event){
+        update_chart();
+    });
+
+    function update_chart(){
         var start_date = $("#start_date").val();
         var end_date = $("#end_date").val();
-        var time_interval;
-        time_interval = $('#time_interval_group .active input').val();
+        var time_interval = $('#time_interval_group .active input').val();
+
+        if(arguments[0])
+        {
+            var update_chart_options = arguments[0];
+            if('start_date' in update_chart_options)
+                start_date = update_chart_options.start_date;
+            if('end_date' in update_chart_options)
+                end_date = update_chart_options.end_date;
+            if('time_interval' in update_chart_options)
+                time_interval = update_chart_options.time_interval;
+        }
+
         if(!start_date || !end_date || start_date>end_date || !time_interval){
             alert("请输入正确日期范围！");
             return;
@@ -46,12 +67,10 @@ $(document).ready(function(){
             "start_date": start_date,
             "end_date": end_date,
             "time_interval": time_interval
-        }
+        };
         $.get('/api/statistic/status-count',param,function(data){
-            console.log(data);
-
-            var x_categories = new Array();
-            var series_data = new Array();
+            var x_categories = [];
+            var series_data = [];
             $.each(data.record, function(a_key, a_data){
                 x_categories.push(a_data.date);
                 series_data.push(a_data.count);
@@ -87,8 +106,7 @@ $(document).ready(function(){
                 }]
             });
         });
-
-    });
+    }
 
     $("#time_range_submit_button").trigger("click");
 });
