@@ -4,3 +4,8 @@
 body { padding-top: 70px; }
 
 footer { margin-top:40px; }
+
+.jumbotron{
+    text-align: center;
+    background-color: transparent;
+}
