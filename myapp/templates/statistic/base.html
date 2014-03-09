@@ -1,0 +1,49 @@
+{# templete statistic/base.html
+  require:
+    module_current_navi
+#}
+
+{% macro statistic_navi_macro(module_current_navi="overview") -%}
+        <div class="side_bar col-md-2">
+            <ui class="nav nav-pills nav-stacked">
+                <li {% if module_current_navi=="overview" %} class="active" {% endif %}>
+                    <a href="{{ url_for("statistic") }}">概述</a></li>
+                <li {% if module_current_navi=="punchcard" %}  class="active" {% endif %}>
+                    <a href="{{ url_for("statistic_punchcard") }}">卡片</a></li>
+                <li><a href="#">类型</a></li>
+                </li>
+            </ui>
+        </div>
+{%- endmacro %}
+
+{% block statistic_head %}
+    {# set some variable need by this template #}
+{% endblock %}
+
+{% set current_navi="statistic" %}
+{% set local_css_file_list = [ url_for('static',filename='css/style.css') ] %}
+{% include 'header.html' %}
+
+<!-- statistic.html -->
+    <div class="row">
+        <!-- statistic navi -->
+    {% block statistic_navi %}
+        {# { statistic_navi_macro() } #}
+    {% endblock %}
+
+    {% block statistic_main_content %}
+    {% endblock %}
+
+{#  statistic/footer.html template
+ #  require:
+ #      local_js_file_list
+ #}
+    </div>
+
+<!-- statistic.html -->
+
+{% set local_js_file_list=[url_for('static',filename='js/statistic.js'),
+    url_for('static',filename='js/bootstrap-datepicker.js'),
+    url_for('static',filename='js/highcharts.js')] %}
+
+{% include 'footer.html' %}

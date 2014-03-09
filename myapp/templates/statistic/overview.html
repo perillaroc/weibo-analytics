@@ -3,10 +3,12 @@
     user
 #}
 
-{% set module_current_navi = 'overview' %}
+{% extends "statistic/base.html" %}
+{% block statistic_navi %}
+    {{ statistic_navi_macro(module_current_navi="overview")}}
+{% endblock %}
 
-{% include 'statistic/header.html' %}
-
+{% block statistic_main_content %}
         <!-- statistic content-->
         <div class="col-md-10 statistic_content">
             <div class="row">
@@ -53,4 +55,4 @@
             </div>
         </div>
 
-{% include "statistic/footer.html" %}
+{% endblock %}
