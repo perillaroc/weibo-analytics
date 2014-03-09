@@ -27,6 +27,12 @@ module.exports = function(grunt){
                         cwd: 'bower_components/highcharts/',
                         src: ['highcharts.js'],
                         dest:'static/js/'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'bower_components/metisMenu/',
+                        src: ['jquery.metisMenu.js'],
+                        dest:'static/js/'
                     }
                 ]
             }
