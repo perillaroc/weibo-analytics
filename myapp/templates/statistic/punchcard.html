@@ -4,7 +4,7 @@
 #}
 {% extends "statistic/base.html" %}
 {%  set module_current_navi="punchcard" %}
-
+{% set local_js_file_list = [url_for('static',filename='js/statistic/punchcard.js')] %}
 {% block statistic_main_content %}
         <!-- statistic content-->
         <div class="col-md-10 statistic_content">

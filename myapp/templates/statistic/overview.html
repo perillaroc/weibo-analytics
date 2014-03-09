@@ -5,6 +5,7 @@
 
 {% extends "statistic/base.html" %}
 {% set module_current_navi="overview" %}
+{% set local_js_file_list = [url_for('static',filename='js/statistic.js')] %}
 
 {% block statistic_main_content %}
         <!-- statistic content-->

@@ -7,7 +7,7 @@ from flask import request, g, jsonify
 
 from flask.ext.security import login_required
 from flask.ext.sqlalchemy import SQLAlchemy
-from sqlalchemy import func, distinct
+from sqlalchemy import func, distinct, and_
 
 from myapp.models import User, WeiboList, Calendar
 from myapp import app, db
@@ -172,4 +172,65 @@ def get_status_count():
     else:
         result = {}
 
+    return jsonify(result)
+
+@api_app.route('/statistic/punchcard/')
+@login_required
+def get_statistis_punchcard():
+    # process query params
+    default_end_date = datetime.date.today()
+    default_start_date = default_end_date - datetime.timedelta(days=30)
+
+    start_date = request.args.get('start_date', '')
+    if start_date == '':
+        start_date = default_start_date
+    else:
+        start_datetime = datetime.datetime.strptime(start_date, "%Y-%m-%d")
+        start_date = start_datetime.date()
+
+    end_date = request.args.get('end_date', '')
+    if end_date == '':
+        end_date = default_end_date
+    else:
+        end_datetime = datetime.datetime.strptime(end_date, "%Y-%m-%d")
+        end_date = end_datetime.date()
+
+    # SELECT WEEKDAY(`c`.`date`) AS d,
+    # COUNT(`l`.`id`) AS count
+    # FROM (
+    #  SELECT date as date
+    #  FROM calendar
+    #  WHERE date>='2014-01-01'
+    #  AND date<='2014-03-28'
+    # )AS c
+    # LEFT JOIN weibo_list AS l
+    # ON DATE(`l`.`created_at`) = `c`.`date` #AND FLOOR(HOUR(`l`.`created_at`)/6) = 1
+    # GROUP BY d
+    # ORDER BY d;
+    record_list = []
+
+    for hour_type in range(4):
+        date_list_query = db.session.query(Calendar.date).label("d"). \
+            filter(Calendar.date >= start_date.isoformat()). \
+            filter(Calendar.date <= end_date.isoformat()). \
+            subquery()
+
+        list_by_hour_type = db.session.query(date_list_query.c.d,
+                                             func.count(WeiboList.id).label("counts")). \
+            outerjoin(WeiboList, and_(date_list_query.c.d == func.DATE(WeiboList.created_at),
+                                      func.FLOOR(func.HOUR(WeiboList.created_at)/6)==hour_type)). \
+            group_by(date_list_query.c.d). \
+            order_by(date_list_query.c.d).all()
+        for one_record in list_by_hour_type:
+            record_list.append({
+                "week": one_record[0],
+                "count": one_record[1]
+            })
+
+
+    result = {
+                "start_date": start_date.isoformat(),
+                "end_date": end_date.isoformat(),
+                "record": record_list
+            }
     return jsonify(result)
