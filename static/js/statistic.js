@@ -82,7 +82,7 @@ $(document).ready(function(){
             else
                 x_tick_interval = 1;
 
-            $('#chart_container').highcharts({
+            $('#main_chart_container').highcharts({
                 chart: {
                     type: 'line'
                 },
