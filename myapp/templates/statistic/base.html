@@ -3,19 +3,6 @@
     module_current_navi
 #}
 
-{% macro statistic_navi_macro(module_current_navi="overview") -%}
-        <div class="side_bar col-md-2">
-            <ui class="nav nav-pills nav-stacked">
-                <li {% if module_current_navi=="overview" %} class="active" {% endif %}>
-                    <a href="{{ url_for("statistic") }}">概述</a></li>
-                <li {% if module_current_navi=="punchcard" %}  class="active" {% endif %}>
-                    <a href="{{ url_for("statistic_punchcard") }}">卡片</a></li>
-                <li><a href="#">类型</a></li>
-                </li>
-            </ui>
-        </div>
-{%- endmacro %}
-
 {% block statistic_head %}
     {# set some variable need by this template #}
 {% endblock %}
@@ -28,7 +15,16 @@
     <div class="row">
         <!-- statistic navi -->
     {% block statistic_navi %}
-        {# { statistic_navi_macro() } #}
+        <div class="side_bar col-md-2">
+            <ui class="nav nav-pills nav-stacked">
+                <li {% if module_current_navi=="overview" or (not module_current_navi) %} class="active" {% endif %}>
+                    <a href="{{ url_for("statistic") }}">概述</a></li>
+                <li {% if module_current_navi=="punchcard" %}  class="active" {% endif %}>
+                    <a href="{{ url_for("statistic_punchcard") }}">卡片</a></li>
+                <li><a href="#">类型</a></li>
+                </li>
+            </ui>
+        </div>
     {% endblock %}
 
     {% block statistic_main_content %}
@@ -42,8 +38,14 @@
 
 <!-- statistic.html -->
 
-{% set local_js_file_list=[url_for('static',filename='js/statistic.js'),
+{% set local_base_js_file_list = [url_for('static',filename='js/statistic.js'),
     url_for('static',filename='js/bootstrap-datepicker.js'),
     url_for('static',filename='js/highcharts.js')] %}
+{% if(local_js_file_list) %}
+{% set local_js_file_list = local_js_file_list + local_base_js_file_list %}
+{% else %}
+{% set local_js_file_list=local_base_js_file_list %}
+{% endif %}
+
 
 {% include 'footer.html' %}

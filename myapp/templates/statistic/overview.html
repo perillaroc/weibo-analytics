@@ -4,9 +4,7 @@
 #}
 
 {% extends "statistic/base.html" %}
-{% block statistic_navi %}
-    {{ statistic_navi_macro(module_current_navi="overview")}}
-{% endblock %}
+{% set module_current_navi="overview" %}
 
 {% block statistic_main_content %}
         <!-- statistic content-->
