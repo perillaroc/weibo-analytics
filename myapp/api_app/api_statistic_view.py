@@ -84,6 +84,19 @@ def get_status_count():
         }
 
     elif time_interval == "month":
+        #TODO 2014.03.09 perillaroc: Use sql script below
+        # SELECT MONTH(`c`.`date`) AS d,
+        # COUNT(`l`.`id`) AS count
+        # FROM (
+        #             SELECT date as date
+        #             FROM calendar
+        #             WHERE date>='2014-01-01'
+        #             AND date<='2014-03-28'
+        # )AS c
+        # LEFT JOIN weibo_list AS l
+        # ON DATE(l.created_at) = `c`.`date`
+        # GROUP BY d
+        # ORDER BY d
         first_day_of_start_month = datetime.date(start_date.year, start_date.month, 1)
         first_day_of_end_month = datetime.date(end_date.year, end_date.month, 1)
         first_day_of_next_end_month = first_day_of_end_month + \

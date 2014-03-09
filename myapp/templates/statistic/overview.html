@@ -3,18 +3,12 @@
     user
 #}
 
-{% set current_navi="statistic" %}
-{% set local_css_file_list = [ url_for('static',filename='css/style.css') ] %}
-{% include 'header.html' %}
+{% set module_current_navi = 'overview' %}
 
-<!-- statistic.html -->
-    <div class="row">
-        <div class="side_bar col-md-2">
-            <ui class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#">概述</a></li>
-                <li><a href="#">分析</a></li>
-            </ui>
-        </div>
+{% include 'statistic/header.html' %}
+
+
+        <!-- statistic content-->
         <div class="col-md-10">
             <div class="row">
                 <form class="form-inline" role="form" id="time_range_form">

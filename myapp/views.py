@@ -73,4 +73,13 @@ def update():
 def statistic():
     #print g.user.info
     g.user.info = json.loads(g.user.info)
-    return render_template('statistic.html', user=g.user, current_navi="statistic")
+    return render_template('statistic/overview.html', user=g.user, current_navi="statistic")
+
+@app.route('/statistic/punchcard')
+@login_required
+def statistic_punchcard():
+    #print g.user.info
+    g.user.info = json.loads(g.user.info)
+    return render_template('statistic/punchcard.html', user=g.user, current_navi="punchcard")
+
+
