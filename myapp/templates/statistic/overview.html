@@ -7,9 +7,8 @@
 
 {% include 'statistic/header.html' %}
 
-
         <!-- statistic content-->
-        <div class="col-md-10">
+        <div class="col-md-10 statistic_content">
             <div class="row">
                 <form class="form-inline" role="form" id="time_range_form">
                     <div class="col-md-6">
@@ -53,12 +52,5 @@
 
             </div>
         </div>
-    </div>
 
-<!-- statistic.html -->
-
-{% set local_js_file_list=[url_for('static',filename='js/statistic.js'),
-    url_for('static',filename='js/bootstrap-datepicker.js'),
-    url_for('static',filename='js/highcharts.js')] %}
-
-{% include 'footer.html' %}
+{% include "statistic/footer.html" %}
