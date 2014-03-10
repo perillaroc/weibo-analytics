@@ -174,7 +174,7 @@ def get_status_count():
 
     return jsonify(result)
 
-@api_app.route('/statistic/punchcard/')
+@api_app.route('/statistic/punchcard')
 @login_required
 def get_statistis_punchcard():
     # process query params
@@ -210,27 +210,31 @@ def get_statistis_punchcard():
     record_list = []
 
     for hour_type in range(4):
-        date_list_query = db.session.query(Calendar.date).label("d"). \
+        date_list_query = db.session.query(Calendar.date.label("d")). \
             filter(Calendar.date >= start_date.isoformat()). \
             filter(Calendar.date <= end_date.isoformat()). \
             subquery()
 
-        list_by_hour_type = db.session.query(date_list_query.c.d,
+        list_by_hour_type = db.session.query(func.WEEKDAY(date_list_query.c.d).label('wd'),
                                              func.count(WeiboList.id).label("counts")). \
             outerjoin(WeiboList, and_(date_list_query.c.d == func.DATE(WeiboList.created_at),
-                                      func.FLOOR(func.HOUR(WeiboList.created_at)/6)==hour_type)). \
-            group_by(date_list_query.c.d). \
-            order_by(date_list_query.c.d).all()
+                                      func.FLOOR(func.HOUR(WeiboList.created_at)/6) == hour_type)). \
+            group_by(func.WEEKDAY(date_list_query.c.d)). \
+            order_by(func.WEEKDAY(date_list_query.c.d)).all()
         for one_record in list_by_hour_type:
             record_list.append({
-                "week": one_record[0],
+                "weekday": one_record[0],
+                "hour_type": hour_type,
                 "count": one_record[1]
             })
 
+    record_list.sort(
+        key=lambda l: (l['weekday'], l['hour_type'])
+    )
 
     result = {
-                "start_date": start_date.isoformat(),
-                "end_date": end_date.isoformat(),
-                "record": record_list
-            }
+        "start_date": start_date.isoformat(),
+        "end_date": end_date.isoformat(),
+        "record": record_list
+    }
     return jsonify(result)
