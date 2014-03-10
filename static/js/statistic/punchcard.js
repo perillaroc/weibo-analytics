@@ -79,6 +79,12 @@ $(document).ready(function(){
                 title: {
                     text: '卡片'
                 },
+                tooltip:{
+                    formatter: function(){
+                        return this.x+y_categories[this.y]
+                            +': '+this.point.z+'条';
+                    }
+                },
                 xAxis: {
                     categories: x_categories,
                     title: {
