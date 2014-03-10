@@ -25,16 +25,9 @@ $(document).ready(function(){
 
                 $.get(update_url,param)
                     .done(get_weibo)
-                    .fail(function( jqXHR, textStatus, errorThrown ) {
-                        $('#process_dialog .modal-body div:first').removeClass("active");
-                        $('#process_dialog .progress_bar').addClass("progress-bar-danger");
-                        $('#process_dialog .modal-title').text("获取微博失败！");
+                    .fail(get_weibo_failed);
 
-                        $('#process_dialog .btn-success').removeAttr("disabled");
-                        $('#process_dialog .btn-success').click(function(){
-                            $('#process_dialog').modal('hide');
-                        })
-                    });
+
                 function get_weibo(data){
                     var current_percent = parseInt(current_page/page_count*100,10).toString();
                     change_process_dialog(current_percent);
@@ -42,30 +35,38 @@ $(document).ready(function(){
                     if(current_page <= page_count){
                         var param = {"page": current_page,
                              "count": count_per_page};
-                        $.get(update_url,param,get_weibo);
+                        $.get(update_url,param)
+                            .done(get_weibo)
+                            .fail(get_weibo_failed);
                     } else {
-                        $('#process_dialog .modal-body div:first').removeClass("active");
-                        $('#process_dialog .progress-bar').addClass("progress-bar-success");
-                        $('#process_dialog .modal-title').text("成功获取微博！");
-
-                        $('#process_dialog .btn-success').removeAttr("disabled");
-                        $('#process_dialog .btn-success').click(function(){
-                            $('#process_dialog').modal('hide');
-                        })
+                        get_weibo_successed();
                     }
                 }
             })
-            .fail(function( jqXHR, textStatus, errorThrown ) {
-                    $('#process_dialog .modal-body div:first').removeClass("active");
-                    $('#process_dialog .progress-bar').addClass("progress-bar-danger");
-                    $('#process_dialog .modal-title').text("获取微博失败！");
-                    change_process_dialog(100);
+            .fail(get_weibo_failed);
 
-                    $('#process_dialog .btn-success').removeAttr("disabled");
-                    $('#process_dialog .btn-success').click(function(){
-                        $('#process_dialog').modal('hide');
-                    });
-            });
+        function get_weibo_failed(jqXHR, textStatus, errorThrown){
+            $('#process_dialog .modal-body div:first').removeClass("active");
+                $('#process_dialog .progress_bar').addClass("progress-bar-danger");
+                $('#process_dialog .modal-title').text("获取微博失败！");
+                change_process_dialog(100);
+
+                $('#process_dialog .btn-success').removeAttr("disabled");
+                $('#process_dialog .btn-success').click(function(){
+                    $('#process_dialog').modal('hide');
+                })
+        }
+
+        function get_weibo_successed(){
+            $('#process_dialog .modal-body div:first').removeClass("active");
+            $('#process_dialog .progress-bar').addClass("progress-bar-success");
+            $('#process_dialog .modal-title').text("成功获取微博！");
+
+            $('#process_dialog .btn-success').removeAttr("disabled");
+            $('#process_dialog .btn-success').click(function(){
+                $('#process_dialog').modal('hide');
+            })
+        }
 
         function change_process_dialog(current_percent){
             $('#process_dialog_progress_bar').attr("aria-valuenow",current_percent);
