@@ -63,7 +63,7 @@ $(document).ready(function(){
         };
         $.get('/api/statistic/punchcard',param,function(data){
             var x_categories = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'];
-            var y_categories =['凌晨', '上午', '下午', '晚上'];
+            var y_categories =['凌晨', '上午', '下午', '晚上',''];
             var series_data = [];
             $.each(data.record, function(a_key, a_data){
                 var a_point=[a_data.weekday, a_data.hour_type, a_data.count];
@@ -74,20 +74,29 @@ $(document).ready(function(){
 
             $('#main_chart_container').highcharts({
                 chart: {
-                    type: 'bubble',
-                    zoomType:'xy'
+                    type: 'bubble'
                 },
                 title: {
                     text: '卡片'
                 },
                 xAxis: {
-                    categories: x_categories
+                    categories: x_categories,
+                    title: {
+                        text:null
+                    },
+                    gridLineColor: 'transparent'
                 },
                 yAxis: {
-                    categories: y_categories
+                    categories: y_categories,
+                    title: {
+                        text:null
+                    },
+                    gridLineColor: 'transparent'
                 },
                 series: [{
-                    data: series_data
+                    data: series_data,
+                    name: '微博数',
+                    showInLegend: false
                 }]
             });
         });
