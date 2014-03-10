@@ -39,7 +39,8 @@
 <!-- statistic.html -->
 
 {% set local_base_js_file_list = [url_for('static',filename='js/bootstrap-datepicker.js'),
-    url_for('static',filename='js/highcharts.js')] %}
+    url_for('static',filename='js/highcharts.js'),
+    url_for('static',filename='js/highcharts-more.js')] %}
 {% if(local_js_file_list) %}
 {% set local_js_file_list = local_js_file_list + local_base_js_file_list %}
 {% else %}

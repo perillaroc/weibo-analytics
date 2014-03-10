@@ -25,7 +25,7 @@ module.exports = function(grunt){
                     {
                         expand: true,
                         cwd: 'bower_components/highcharts/',
-                        src: ['highcharts.js'],
+                        src: ['highcharts.js', 'highcharts-more.js'],
                         dest:'static/js/'
                     },
                     {
