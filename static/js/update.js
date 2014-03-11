@@ -3,9 +3,10 @@
 $(document).ready(function(){
     $(".btn_update_weibo").click(function(){
 
-        $('#process_dialog .progress-bar').removeClass().addClass("progress-bar");
-        $('#process_dialog .modal-title').text("获取微博中...");
-        $('#process_dialog .btn-success').attr("disabled","disabled");
+        var process_dialog = $('#process_dialog');
+        process_dialog.find('.progress-bar').removeClass().addClass("progress-bar");
+        process_dialog.find('.modal-title').text("获取微博中...");
+        process_dialog.find('.btn-success').attr("disabled","disabled");
         change_process_dialog(5);
         $("#process_dialog").modal();
 
@@ -46,33 +47,34 @@ $(document).ready(function(){
             .fail(get_weibo_failed);
 
         function get_weibo_failed(jqXHR, textStatus, errorThrown){
-            $('#process_dialog .modal-body div:first').removeClass("active");
-                $('#process_dialog .progress_bar').addClass("progress-bar-danger");
-                $('#process_dialog .modal-title').text("获取微博失败！");
+            process_dialog.find('.modal-body div:first').removeClass("active");
+                process_dialog.find('.progress_bar').addClass("progress-bar-danger");
+                process_dialog.find('.modal-title').text("获取微博失败！");
                 change_process_dialog(100);
 
-                $('#process_dialog .btn-success').removeAttr("disabled");
-                $('#process_dialog .btn-success').click(function(){
-                    $('#process_dialog').modal('hide');
+                process_dialog.find('.btn-success').removeAttr("disabled");
+                process_dialog.find('.btn-success').click(function(){
+                    process_dialog.modal('hide');
                 })
         }
 
         function get_weibo_successed(){
-            $('#process_dialog .modal-body div:first').removeClass("active");
-            $('#process_dialog .progress-bar').addClass("progress-bar-success");
-            $('#process_dialog .modal-title').text("成功获取微博！");
+            process_dialog.find('.modal-body div:first').removeClass("active");
+            process_dialog.find('.progress-bar').addClass("progress-bar-success");
+            process_dialog.find('.modal-title').text("成功获取微博！");
 
-            $('#process_dialog .btn-success').removeAttr("disabled");
-            $('#process_dialog .btn-success').click(function(){
-                $('#process_dialog').modal('hide');
+            process_dialog.find('.btn-success').removeAttr("disabled");
+            process_dialog.find('.btn-success').click(function(){
+                process_dialog.modal('hide');
             })
         }
 
         function change_process_dialog(current_percent){
-            $('#process_dialog_progress_bar').attr("aria-valuenow",current_percent);
-            $('#process_dialog_progress_bar').attr("style","width:"+current_percent);
-            $('#process_dialog_progress_bar').attr("style","width:"+current_percent+"%");
-            $('#process_dialog_progress_bar').text(current_percent+"%");
+            var process_dialog_progress_bar = $('#process_dialog_progress_bar');
+            process_dialog_progress_bar.attr("aria-valuenow",current_percent);
+            process_dialog_progress_bar.attr("style","width:"+current_percent);
+            process_dialog_progress_bar.attr("style","width:"+current_percent+"%");
+            process_dialog_progress_bar.text(current_percent+"%");
         }
     });
 });
