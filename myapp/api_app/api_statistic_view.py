@@ -238,3 +238,60 @@ def get_statistis_punchcard():
         "record": record_list
     }
     return jsonify(result)
+
+@api_app.route('/statistic/type')
+@login_required
+def get_statistic_by_type():
+    # process query params
+    default_end_date = datetime.date.today()
+    default_start_date = default_end_date - datetime.timedelta(days=30)
+
+    start_date = request.args.get('start_date', '')
+    if start_date == '':
+        start_date = default_start_date
+    else:
+        start_datetime = datetime.datetime.strptime(start_date, "%Y-%m-%d")
+        start_date = start_datetime.date()
+
+    end_date = request.args.get('end_date', '')
+    if end_date == '':
+        end_date = default_end_date
+    else:
+        end_datetime = datetime.datetime.strptime(end_date, "%Y-%m-%d")
+        end_date = end_datetime.date()
+
+    statistic_type = request.args.get('type', 'retweeted') #默认转发
+
+    # total statuses
+    total_query = db.session.query(func.count(WeiboList)).\
+        filter(WeiboList.created_at >= start_date).\
+        filter(WeiboList.created_at <= end_date)
+    total_count = total_query.first()[0]
+
+    record_list = []
+    if statistic_type=="retweeted":
+        # retweeted statuses
+        # SELECT COUNT(*)
+        # FROM weibo_list
+        # WHERE `weibo_list`.`retweeted_status`<>""""""
+        # AND DATE(`weibo_list`.`created_at`) BETWEEN '2014-01-01' AND '2014-03-12'
+        retweeted_query = db.session.query(func.count(WeiboList)).\
+            filter(WeiboList.retweeted_status != "\"\"").\
+            filter(WeiboList.created_at >= start_date).\
+            filter(WeiboList.created_at <= end_date)
+        retweeted_count = retweeted_query.first()[0]
+
+        result = {
+            "start_date": start_date.isoformat(),
+            "end_date": end_date.isoformat(),
+            "retweeted_count": retweeted_count,
+            "total_count": total_count
+        }
+        return jsonify(result)
+
+    result = {
+        "start_date": start_date.isoformat(),
+        "end_date": end_date.isoformat(),
+        "error": "error"
+    }
+    return jsonify(result)
