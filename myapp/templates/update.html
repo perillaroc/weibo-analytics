@@ -8,6 +8,14 @@
 <!-- update.html -->
     <section class="content-top">
         <div class="module">
+            <div class="row">
+                <div class="alert alert-warning alert-dismissable">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                  <strong>注意!</strong> 由于
+                    <a href="http://open.weibo.com/wiki/2/statuses/user_timeline" class="alert-link">新浪微博API接口</a>
+                    的限制，目前只能获取最近发表的2000条微博。
+                </div>
+            </div>
             <div class="row content" id="userlogo">
                 <div class="pull-left userlogo_pic">
                     <img src="{{ user.info['profile_image_url'] }}" alt="{{ user.info['screen_name'] }}"/>
