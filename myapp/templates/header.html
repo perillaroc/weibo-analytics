@@ -40,14 +40,13 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" style="background-repeat: no-repeat;background-image:url({{ url_for('static',filename='img/logo/logo-40.png') }}); padding-left:40px" href="#">豆豆猫统计</a>
+            <a class="navbar-brand" style="background-repeat: no-repeat;background-image:url({{ url_for('static',filename='img/logo/logo-40.png') }}); padding-left:40px" href="{{ url_for('index') }}">豆豆猫统计</a>
           </div>
           <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
               <li {% if current_navi=="index" %} class="active" {% endif %}><a href="{{ url_for("index") }}">首页</a></li>
               <li {% if current_navi=="update" %} class="active" {% endif %}><a href="{{ url_for("update") }}">获取</a></li>
               <li {% if current_navi=="statistic" %} class="active" {% endif %}><a href="{{ url_for("statistic") }}">统计</a></li>
-              <li {% if current_navi=="manage" %} class="active" {% endif %}><a href="{#{ url_for("manage") }#}">管理</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated() %}
@@ -55,7 +54,9 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         {{ user.info['screen_name'] }} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                      <li><a href="{{ url_for("logout") }}">注销</a></li>
+                        <li><a href="#">管理</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{{ url_for("logout") }}">注销</a></li>
                     </ul>
                 </li>
                 {% else %}
