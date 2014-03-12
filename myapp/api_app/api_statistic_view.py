@@ -241,7 +241,7 @@ def get_statistis_punchcard():
 
 @api_app.route('/statistic/type')
 @login_required
-def get_statistic_by_type():
+def get_statistic_count_by_type():
     # process query params
     default_end_date = datetime.date.today()
     default_start_date = default_end_date - datetime.timedelta(days=30)
@@ -260,7 +260,9 @@ def get_statistic_by_type():
         end_datetime = datetime.datetime.strptime(end_date, "%Y-%m-%d")
         end_date = end_datetime.date()
 
-    statistic_type = request.args.get('type', 'retweeted') #默认转发
+    args_type = request.args.get('type', 'retweeted') #默认转发
+
+    statistic_type = ["retweeted", "pic", "geo"]
 
     # total statuses
     total_query = db.session.query(func.count(WeiboList)).\
@@ -268,8 +270,12 @@ def get_statistic_by_type():
         filter(WeiboList.created_at <= end_date)
     total_count = total_query.first()[0]
 
-    record_list = []
-    if statistic_type=="retweeted":
+    result = {
+        "start_date": start_date.isoformat(),
+        "end_date": end_date.isoformat(),
+        "total_count": total_count
+    }
+    if "retweeted" in statistic_type:
         # retweeted statuses
         # SELECT COUNT(*)
         # FROM weibo_list
@@ -280,18 +286,22 @@ def get_statistic_by_type():
             filter(WeiboList.created_at >= start_date).\
             filter(WeiboList.created_at <= end_date)
         retweeted_count = retweeted_query.first()[0]
+        result["retweeted_count"] = retweeted_count
 
-        result = {
-            "start_date": start_date.isoformat(),
-            "end_date": end_date.isoformat(),
-            "retweeted_count": retweeted_count,
-            "total_count": total_count
-        }
-        return jsonify(result)
+    if "pic" in statistic_type:
+        pic_query = db.session.query(func.count(WeiboList)).\
+            filter(WeiboList.original_pic != "").\
+            filter(WeiboList.created_at >= start_date).\
+            filter(WeiboList.created_at <= end_date)
+        pic_count = pic_query.first()[0]
+        result["pic_count"] = pic_count
 
-    result = {
-        "start_date": start_date.isoformat(),
-        "end_date": end_date.isoformat(),
-        "error": "error"
-    }
+    if "geo" in statistic_type:
+        geo_query = db.session.query(func.count(WeiboList)).\
+            filter(WeiboList.geo != "null").\
+            filter(WeiboList.created_at >= start_date).\
+            filter(WeiboList.created_at <= end_date)
+        geo_count = geo_query.first()[0]
+        result["geo_count"] = geo_count
+
     return jsonify(result)
