@@ -80,6 +80,12 @@ def statistic():
 def statistic_punchcard():
     #print g.user.info
     g.user.info = json.loads(g.user.info)
-    return render_template('statistic/punchcard.html', user=g.user, current_navi="punchcard")
+    return render_template('statistic/punchcard.html', user=g.user, current_navi="statistic")
+
+@app.route('/about')
+@login_required
+def about():
+    g.user.info = json.loads(g.user.info)
+    return render_template('about.html', user=g.user, current_navi='about')
 
 
