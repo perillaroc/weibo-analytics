@@ -62,47 +62,37 @@ $(document).ready(function(){
             "end_date": end_date
         };
         $.get('/api/statistic/type',param,function(data){
-            var x_categories = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'];
-            var y_categories =['凌晨', '上午', '下午', '晚上',''];
-            var series_data = [];
-            $.each(data.record, function(a_key, a_data){
-                var a_point=[a_data.weekday, a_data.hour_type, a_data.count];
-                series_data.push(a_point);
-            });
-
-            var x_tick_interval = 1;
-
             $('#main_chart_container').highcharts({
                 chart: {
-                    type: 'bubble'
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
                 },
                 title: {
-                    text: '卡片'
+                    text: '原创vs转发'
                 },
                 tooltip:{
-                    formatter: function(){
-                        return this.x+y_categories[this.y]
-                            +': '+this.point.z+'条';
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: '#000000',
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        }
                     }
                 },
-                xAxis: {
-                    categories: x_categories,
-                    title: {
-                        text:null
-                    },
-                    gridLineColor: 'transparent'
-                },
-                yAxis: {
-                    categories: y_categories,
-                    title: {
-                        text:null
-                    },
-                    gridLineColor: 'transparent'
-                },
                 series: [{
-                    data: series_data,
-                    name: '微博数',
-                    showInLegend: false
+                    type:'pie',
+                    name: '百分比',
+                    data: [
+                        ['原创', data.total_count-data.retweeted_count],
+                        ['转发', data.retweeted_count]
+                    ]
                 }]
             });
         });
