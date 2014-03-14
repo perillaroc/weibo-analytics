@@ -21,7 +21,8 @@
                     <a href="{{ url_for("statistic") }}">概述</a></li>
                 <li {% if module_current_navi=="punchcard" %}  class="active" {% endif %}>
                     <a href="{{ url_for("statistic_punchcard") }}">卡片</a></li>
-                <li><a href="#">类型</a></li>
+                <li {% if module_current_navi=="type" %}  class="active" {% endif %}>
+                    <a href="{{ url_for("statistic_type") }}">类型</a></li>
                 </li>
             </ui>
         </div>
