@@ -62,6 +62,8 @@ $(document).ready(function(){
             "end_date": end_date
         };
         $.get('/api/statistic/type',param,function(data){
+            $('#main_chart_container').empty();
+            $('#main_chart_container').append('<div class="row retweeted_container"></div>');
             $('#main_chart_container').highcharts({
                 chart: {
                     plotBackgroundColor: null,
