@@ -266,8 +266,8 @@ def get_statistic_count_by_type():
 
     # total statuses
     total_query = db.session.query(func.count(WeiboList)).\
-        filter(WeiboList.created_at >= start_date).\
-        filter(WeiboList.created_at <= end_date)
+        filter(func.DATE(WeiboList.created_at) >= start_date).\
+        filter(func.DATE(WeiboList.created_at) <= end_date)
     total_count = total_query.first()[0]
 
     result = {
@@ -283,24 +283,24 @@ def get_statistic_count_by_type():
         # AND DATE(`weibo_list`.`created_at`) BETWEEN '2014-01-01' AND '2014-03-12'
         retweeted_query = db.session.query(func.count(WeiboList)).\
             filter(WeiboList.retweeted_status != "\"\"").\
-            filter(WeiboList.created_at >= start_date).\
-            filter(WeiboList.created_at <= end_date)
+            filter(func.DATE(WeiboList.created_at) >= start_date).\
+            filter(func.DATE(WeiboList.created_at) <= end_date)
         retweeted_count = retweeted_query.first()[0]
         result["retweeted_count"] = retweeted_count
 
     if "pic" in statistic_type:
         pic_query = db.session.query(func.count(WeiboList)).\
             filter(WeiboList.original_pic != "").\
-            filter(WeiboList.created_at >= start_date).\
-            filter(WeiboList.created_at <= end_date)
+            filter(func.DATE(WeiboList.created_at) >= start_date).\
+            filter(func.DATE(WeiboList.created_at) <= end_date)
         pic_count = pic_query.first()[0]
         result["pic_count"] = pic_count
 
     if "geo" in statistic_type:
         geo_query = db.session.query(func.count(WeiboList)).\
             filter(WeiboList.geo != "null").\
-            filter(WeiboList.created_at >= start_date).\
-            filter(WeiboList.created_at <= end_date)
+            filter(func.DATE(WeiboList.created_at) >= start_date).\
+            filter(func.DATE(WeiboList.created_at) <= end_date)
         geo_count = geo_query.first()[0]
         result["geo_count"] = geo_count
 
