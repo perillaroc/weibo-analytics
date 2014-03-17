@@ -63,8 +63,8 @@ $(document).ready(function(){
         };
         $.get('/api/statistic/type',param,function(data){
             $('#main_chart_container').empty();
-            $('#main_chart_container').append('<div class="row retweeted_container"></div>');
-            $('#main_chart_container').highcharts({
+            $('#main_chart_container').append("<div class=\"row retweeted_container\"></div>");
+            $('#main_chart_container .retweeted_container').highcharts({
                 chart: {
                     plotBackgroundColor: null,
                     plotBorderWidth: null,
