@@ -97,6 +97,15 @@ $(document).ready(function(){
                     ]
                 }]
             });
+
+            $("<div class=\"row summary_container\"></div>")
+                .append("<div class=\"col-md-2\"><p>全部</p><p>"+data.total_count+"</p></div>")
+                .append("<div class=\"col-md-2\"><p>原创</p><p>"+ (data.total_count-data.retweeted_count)+"</p></div>")
+                .append("<div class=\"col-md-2\"><p>转发</p><p>"+data.retweeted_count+"</p></div>")
+                .append("<div class=\"col-md-2\"><p>图片</p><p>"+data.pic_count+"</p></div>")
+                .append("<div class=\"col-md-2\"><p>位置</p><p>"+data.geo_count+"</p></div>")
+                .appendTo('#main_chart_container');
+
         });
     }
 
