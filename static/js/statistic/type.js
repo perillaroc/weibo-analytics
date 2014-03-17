@@ -109,7 +109,10 @@ $(document).ready(function(){
                 .append("<div class=\"col-md-2\"><p>图片</p><p>"+data.pic_count+"</p></div>")
                 .append("<div class=\"col-md-2\"><p>位置</p><p>"+data.geo_count+"</p></div>")
                 .appendTo('#main_chart_container')
-                .children('.item_tooltip').tooltip();
+                .children('.item_tooltip').tooltip({
+                    selector: "[data-toggle=tooltip]",
+                    container: "body"
+                });
         });
     }
 
