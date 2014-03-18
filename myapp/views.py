@@ -57,35 +57,31 @@ def logout():
 @app.route('/index')
 @login_required
 def index():
-    #print g.user.info
     g.user.info = json.loads(g.user.info)
     return render_template('index.html', user=g.user, current_navi="index")
 
 @app.route('/update')
 @login_required
 def update():
-    #print g.user.info
     g.user.info = json.loads(g.user.info)
+
     return render_template('update.html', user=g.user, current_navi="update")
 
 @app.route('/statistic')
 @login_required
 def statistic():
-    #print g.user.info
     g.user.info = json.loads(g.user.info)
     return render_template('statistic/overview.html', user=g.user, current_navi="statistic")
 
 @app.route('/statistic/punchcard')
 @login_required
 def statistic_punchcard():
-    #print g.user.info
     g.user.info = json.loads(g.user.info)
     return render_template('statistic/punchcard.html', user=g.user, current_navi="statistic")
 
 @app.route('/statistic/type')
 @login_required
 def statistic_type():
-    #print g.user.info
     g.user.info = json.loads(g.user.info)
     return render_template('statistic/type.html', user=g.user, current_navi="statistic")
 

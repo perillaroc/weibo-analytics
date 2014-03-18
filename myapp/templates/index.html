@@ -21,11 +21,15 @@
         </p>
         <p>或者，您可以选择如下两个任务</p>
         <p>
-            <a class="btn btn-default" href="{{ url_for('update') }}">1.读取您的微博</a>
-            <a class="btn btn-default" href="{{ url_for('statistic') }}">2.分析已载入的微博</a>
+            <a class="item_tooltip btn btn-default" href="{{ url_for('update') }}" data-toggle="tooltip"
+               data-placement="bottom" title="抓取您的微博，用于分析">1.读取</a>
+            <a class="item_tooltip btn btn-default" href="{{ url_for('statistic') }}" data-toggle="tooltip"
+               data-placement="bottom" title="分析已抓取的微博">2.分析</a>
         </p>
         </div>
     </section>
 <!-- /index.html -->
+
+{% set local_js_file_list=[url_for('static',filename='js/index.js')] %}
 
 {% include 'footer.html' %}
