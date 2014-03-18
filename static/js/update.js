@@ -64,6 +64,8 @@ $(document).ready(function(){
             process_dialog.find('.modal-title').text("成功获取微博！");
 
             process_dialog.find('.btn-success').removeAttr("disabled");
+            process_dialog.find('.modal-footer').append("<a href=\"/statistic\" " +
+                "class=\"btn btn-primary\">进入下一步</button>")
             process_dialog.find('.btn-success').click(function(){
                 process_dialog.modal('hide');
             })
