@@ -100,7 +100,7 @@ $(document).ready(function(){
 
             $("<div class=\"row summary_container\"></div>")
                 .append("<div class=\"col-md-2\">" +
-                            "<p><a href=\"#\" class=\"item_tooltip\" title data-toggle=\"tooltip\" data-original-tittle=\"所有微博\">" +
+                            "<p><a href=\"#\" class=\"item_tooltip\" data-toggle=\"tooltip\" tittle=\"所有微博\">" +
                                 "全部</a></p>" +
                             "<p>"+data.total_count+"</p>" +
                         "</div>")
@@ -108,11 +108,11 @@ $(document).ready(function(){
                 .append("<div class=\"col-md-2\"><p>转发</p><p>"+data.retweeted_count+"</p></div>")
                 .append("<div class=\"col-md-2\"><p>图片</p><p>"+data.pic_count+"</p></div>")
                 .append("<div class=\"col-md-2\"><p>位置</p><p>"+data.geo_count+"</p></div>")
-                .appendTo('#main_chart_container')
-                .children('.item_tooltip').tooltip({
-                    selector: "[data-toggle=tooltip]",
-                    container: "body"
-                });
+                .appendTo('#main_chart_container');
+
+            $('.item_tooltip').tooltip({
+                container: "body"
+            });
         });
     }
 
