@@ -6,6 +6,10 @@ $(document).ready(function(){
         var process_dialog = $('#process_dialog');
         process_dialog.find('.progress-bar').removeClass().addClass("progress-bar");
         process_dialog.find('.modal-title').text("获取微博中...");
+        process_dialog.find('.modal-footer').empty();
+        process_dialog.find('.modal-footer').append(
+            "<button type=\"button\" class=\"btn btn-success\">确定</button>"
+        )
         process_dialog.find('.btn-success').attr("disabled","disabled");
         change_process_dialog(5);
         $("#process_dialog").modal();
@@ -65,7 +69,11 @@ $(document).ready(function(){
 
             process_dialog.find('.btn-success').removeAttr("disabled");
             process_dialog.find('.modal-footer').append("<a href=\"/statistic\" " +
-                "class=\"btn btn-primary\">进入下一步</button>")
+                "class=\"btn btn-primary\" data-toggle=\"tooltip\" title=\"分析已抓取的微博\">进入下一步</button>")
+                .tooltip({
+                    selector: "[data-toggle=tooltip]",
+                    container: 'body'
+                })
             process_dialog.find('.btn-success').click(function(){
                 process_dialog.modal('hide');
             })

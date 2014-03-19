@@ -16,34 +16,30 @@
                     的限制，目前只能获取最近发表的2000条微博。
                 </div>
             </div>
-            <div class="row content" id="userlogo">
-                <div class="pull-left userlogo_pic">
-                    <img src="{{ user.info['profile_image_url'] }}" alt="{{ user.info['screen_name'] }}"/>
-                </div>
-                <div class="userlogo_detail">
-                    <p>
-                        {{ user.info['screen_name'] }} {{ user.info['location'] }}
-                    </p>
+            <div class="row text-center">
+                    <img src="{{ user.info['avatar_large'] }}" alt="{{ user.info['screen_name'] }}"/>
+                    <p>{{ user.info['screen_name'] }} {{ user.info['location'] }}</p>
                     <p class="description">{{ user.info['description'] }}</p>
-                </div>
             </div>
-            <div class="row content clearleft" id="userinfo">
-                <div class="table" id="userinfoTable">
-                      <ul class="list-inline">
-                        <li class="button" scope="col">关注：{{ user.info['friends_count'] }}</li>
-                        <li class="button" scope="col"><a href="{# url_for('userfollowers') #}">粉丝：{{ user.info['followers_count'] }}</a></li>
-                        <li class="button" scope="col"><a href="{# url_for('usertimeline') #}">微博：{{ user.info['statuses_count']  }}</a></li>
-                        <li class="button" scope="col">收藏：{{ user.info['favourites_count'] }}</li>
-                      </ul>
-                </div>
-            </div> <!-- END .content #userinfo-->
-        </div> <!-- END module -->
-    </section> <!-- END .content-top -->
+            <div class="row text-center">
+                <p>已保存微博：共{{ page_info.total_count_in_database }}条</p>
+                <p>从{{ page_info.oldest_date }}到{{ page_info.latest_date }}</p>
+            </div>
+        </div>
+    </section>
 
     <section>
-        <div class="row">
-        	<button class="btn btn-primary btn_update_weibo" type="button">抓取微博</button>
-            <button class="btn btn-primary btn_analytics_weibo" type="button">微博统计</button>
+        <div class="row text-center">
+        	<button class="btn btn-success btn_update_weibo" type="button">
+                抓取微博
+                <span class="badge">{% if page_info.total_count_for_update>0 and page_info.total_count_for_update<=100 %}
+                {{ page_info.total_count_for_update }}
+                {% elif page_info.total_count_for_update>100 %}
+                100+
+                {% elif page_info.total_count_for_update==0 %}
+                {% endif %}
+                </span>
+            </button>
             <button class="btn btn-primary btn_query_weibo" type="button">查询</button>
         </div>
     </section>
