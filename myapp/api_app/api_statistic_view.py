@@ -67,6 +67,7 @@ def get_status_count():
 
         list_by_day = db.session.query(date_list_query.c.date, func.count(WeiboList.id).label("counts")). \
             outerjoin(WeiboList, date_list_query.c.date == func.DATE(WeiboList.created_at)). \
+            filter(WeiboList.user_uid == g.user.uid). \
             group_by(date_list_query.c.date). \
             order_by(date_list_query.c.date).all()
 
@@ -108,6 +109,7 @@ def get_status_count():
 
         list_by_day = db.session.query(date_list_query.c.d, func.count(WeiboList.id).label("counts")). \
             outerjoin(WeiboList, date_list_query.c.d == func.DATE_FORMAT(WeiboList.created_at, "%Y-%m")). \
+            filter(WeiboList.user_uid == g.user.uid). \
             group_by(date_list_query.c.d). \
             order_by(date_list_query.c.d).all()
 
@@ -131,6 +133,7 @@ def get_status_count():
 
         list_by_day = db.session.query(date_list_query.c.d, func.count(WeiboList.id).label("counts")). \
             outerjoin(WeiboList, date_list_query.c.d == func.DATE_FORMAT(WeiboList.created_at, "%X年第%v周")). \
+            filter(WeiboList.user_uid == g.user.uid). \
             group_by(date_list_query.c.d). \
             order_by(date_list_query.c.d).all()
 
@@ -154,6 +157,7 @@ def get_status_count():
 
         list_by_day = db.session.query(date_list_query.c.d, func.count(WeiboList.id).label("counts")). \
             outerjoin(WeiboList, date_list_query.c.d == func.YEAR(WeiboList.created_at)). \
+            filter(WeiboList.user_uid == g.user.uid). \
             group_by(date_list_query.c.d). \
             order_by(date_list_query.c.d).all()
 
@@ -219,6 +223,7 @@ def get_statistis_punchcard():
                                              func.count(WeiboList.id).label("counts")). \
             outerjoin(WeiboList, and_(date_list_query.c.d == func.DATE(WeiboList.created_at),
                                       func.FLOOR(func.HOUR(WeiboList.created_at)/6) == hour_type)). \
+            filter(WeiboList.user_uid == g.user.uid). \
             group_by(func.WEEKDAY(date_list_query.c.d)). \
             order_by(func.WEEKDAY(date_list_query.c.d)).all()
         for one_record in list_by_hour_type:
@@ -266,6 +271,7 @@ def get_statistic_count_by_type():
 
     # total statuses
     total_query = db.session.query(func.count(WeiboList)).\
+        filter(WeiboList.user_uid == g.user.uid). \
         filter(func.DATE(WeiboList.created_at) >= start_date).\
         filter(func.DATE(WeiboList.created_at) <= end_date)
     total_count = total_query.first()[0]
@@ -282,6 +288,7 @@ def get_statistic_count_by_type():
         # WHERE `weibo_list`.`retweeted_status`<>""""""
         # AND DATE(`weibo_list`.`created_at`) BETWEEN '2014-01-01' AND '2014-03-12'
         retweeted_query = db.session.query(func.count(WeiboList)).\
+            filter(WeiboList.user_uid == g.user.uid). \
             filter(WeiboList.retweeted_status != "\"\"").\
             filter(func.DATE(WeiboList.created_at) >= start_date).\
             filter(func.DATE(WeiboList.created_at) <= end_date)
@@ -290,6 +297,7 @@ def get_statistic_count_by_type():
 
     if "pic" in statistic_type:
         pic_query = db.session.query(func.count(WeiboList)).\
+            filter(WeiboList.user_uid == g.user.uid). \
             filter(WeiboList.original_pic != "").\
             filter(func.DATE(WeiboList.created_at) >= start_date).\
             filter(func.DATE(WeiboList.created_at) <= end_date)
@@ -298,6 +306,7 @@ def get_statistic_count_by_type():
 
     if "geo" in statistic_type:
         geo_query = db.session.query(func.count(WeiboList)).\
+            filter(WeiboList.user_uid == g.user.uid). \
             filter(WeiboList.geo != "null").\
             filter(func.DATE(WeiboList.created_at) >= start_date).\
             filter(func.DATE(WeiboList.created_at) <= end_date)
