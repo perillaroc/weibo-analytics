@@ -16,14 +16,16 @@
                     的限制，目前只能获取最近发表的2000条微博。
                 </div>
             </div>
-            <div class="row text-center">
+            <div class="row">
+                <div class="col-md-4 text-center">
                     <img src="{{ user.info['avatar_large'] }}" alt="{{ user.info['screen_name'] }}"/>
+                </div>
+                <div class="col-md-8">
                     <p>{{ user.info['screen_name'] }} {{ user.info['location'] }}</p>
                     <p class="description">{{ user.info['description'] }}</p>
-            </div>
-            <div class="row text-center">
-                <p>已保存微博：共{{ page_info.total_count_in_database }}条</p>
-                <p>从{{ page_info.oldest_date }}到{{ page_info.latest_date }}</p>
+                    <p>已保存微博：共{{ page_info.total_count_in_database }}条</p>
+                    <p>从{{ page_info.oldest_date }}到{{ page_info.latest_date }}</p>
+                </div>
             </div>
         </div>
     </section>
