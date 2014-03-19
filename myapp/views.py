@@ -92,13 +92,13 @@ def update():
     token = json.loads(g.user.token)
     client.set_access_token(token['access_token'], token['expires'])
     statuses = client.statuses.user_timeline.get(count=10, page=1, since_id=latest_uid)
-    total_count_for_update = statuses['total_number']
+    total_count = statuses['total_number']
 
     page_info = {
         "oldest_date": oldest_datetime.date().isoformat(),
         "latest_date": latest_datetime.date().isoformat(),
         "total_count_in_database": total_count_in_database,
-        "total_count_for_update": total_count_for_update
+        "total_count_for_update": total_count - total_count_in_database
     }
 
     return render_template('update.html', user=g.user, current_navi="update", page_info=page_info)
