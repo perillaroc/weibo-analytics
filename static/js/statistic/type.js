@@ -71,7 +71,7 @@ $(document).ready(function(){
                     plotShadow: false
                 },
                 title: {
-                    text: '原创vs转发'
+                    text: '原创vs转发<br>' +data.start_date + '至' + data.end_date
                 },
                 tooltip:{
                     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'

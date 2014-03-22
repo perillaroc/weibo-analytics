@@ -77,12 +77,12 @@ $(document).ready(function(){
                     type: 'bubble'
                 },
                 title: {
-                    text: '卡片'
+                    text: data.start_date + '至' + data.end_date + '逐时段微博统计'
                 },
                 tooltip:{
                     formatter: function(){
                         return this.x+y_categories[this.y]
-                            +': '+this.point.z+'条';
+                            +': '+(this.point.z)+'条';
                     }
                 },
                 xAxis: {

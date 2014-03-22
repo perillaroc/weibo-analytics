@@ -87,7 +87,7 @@ $(document).ready(function(){
                     type: 'line'
                 },
                 title: {
-                    text: '统计'
+                    text: '发微博概览' + '<br>' + data.start_date + '至' + data.end_date
                 },
                 xAxis: {
                     categories: x_categories,
